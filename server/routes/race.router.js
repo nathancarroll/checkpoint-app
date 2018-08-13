@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
                         FROM race JOIN person ON race.creator = person.id;`;
     pool.query(queryString)
         .then((PGres) => {
-            console.log(PGres.rows);
             res.send(PGres.rows)
         })
         .catch((err) => {
@@ -16,5 +15,24 @@ router.get('/', (req, res) => {
             res.sendStatus(500);
         })
 })
+
+router.post('/', (req, res) => {
+    console.log('race POST route. user:', req.user);
+    console.log('POST body:', req.body.raceName);
+    const queryString = `INSERT INTO race (name, creator) VALUES ($1, $2) RETURNING id;`;
+    pool.query(queryString, [req.body.raceName, req.user.id])
+        .then((PGres) => {
+            console.log(PGres.rows);
+            res.send(PGres.rows);
+        })
+        .catch((err) => {
+            console.log('error during post', err);
+            res.sendStatus(500);
+        })
+})
+
+// router.get('/:id', (req, res) => {
+//     const queryString = `SELECT `
+// })
 
 module.exports = router;

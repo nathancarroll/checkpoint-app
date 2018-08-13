@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-function getRaces(){
+export function getRaces(){
     return axios.get('/api/race')
         .then((res) => {
             return res.data
@@ -10,4 +10,13 @@ function getRaces(){
         })
 }
 
-export default getRaces;
+export function postRace(raceName){
+    console.log('postRace function called with', raceName);
+    return axios.post('/api/race', {raceName})
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return 'error during post: ' + err;
+        })
+}

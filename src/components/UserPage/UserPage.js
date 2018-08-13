@@ -7,6 +7,8 @@ import {USER_ACTIONS} from '../../redux/actions/userActions';
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 
+import InitNewRace from '../../components/InitNewRace/InitNewRace';
+
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -56,6 +58,7 @@ class UserPage extends Component {
       <div>
         <Nav />
         { content }
+        <InitNewRace />
       </div>
     );
   }

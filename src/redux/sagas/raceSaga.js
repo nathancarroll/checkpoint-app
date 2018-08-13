@@ -1,6 +1,6 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {RACE_ACTIONS} from "../actions/raceActions";
-import getRaces from '../requests/raceRequests';
+import {getRaces, postRace} from '../requests/raceRequests';
 
 function* fetchRaces(action){
     try {
@@ -12,8 +12,19 @@ function* fetchRaces(action){
     }
 }
 
+function* newRace(action){
+    try {
+        const raceID = yield postRace(action.payload);
+        yield put({type: RACE_ACTIONS.SET_NEW, payload: raceID})
+    } catch(err) {
+        console.log('error during newRace generator saga', err);
+        yield err
+    }
+}
+
 function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.FETCH_RACES, fetchRaces);
+    yield takeLatest(RACE_ACTIONS.POST_RACE, newRace);
 }
 
 export default raceSaga;

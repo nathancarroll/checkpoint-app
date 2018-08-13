@@ -1,4 +1,6 @@
 export const RACE_ACTIONS = {
     FETCH_RACES: 'FETCH_RACES',
-    SET_RACES: 'SET_RACES'
+    SET_RACES: 'SET_RACES',
+    POST_RACE: 'POST_RACE',
+    SET_NEW: 'SET_NEW',
 }
