@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function getRaces(){
+function getRaces(){
     return axios.get('/api/race')
         .then((res) => {
             return res.data
@@ -9,3 +9,5 @@ export function getRaces(){
             return 'error during get: ' + err;
         })
 }
+
+export default getRaces;

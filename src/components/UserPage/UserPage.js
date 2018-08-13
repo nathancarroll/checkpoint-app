@@ -10,6 +10,7 @@ import { triggerLogout } from '../../redux/actions/loginActions';
 
 const mapStateToProps = state => ({
   user: state.user,
+  allRaces: state.race.allRaces
 });
 
 class UserPage extends Component {
@@ -46,6 +47,7 @@ class UserPage extends Component {
           >
             Log Out
           </button>
+          {JSON.stringify(this.props.allRaces)}
         </div>
       );
     }
