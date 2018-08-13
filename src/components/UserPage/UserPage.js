@@ -8,6 +8,7 @@ import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 
 import InitNewRace from '../../components/InitNewRace/InitNewRace';
+import CheckpointMap from '../../components/CheckpointMap/CheckpointMap';
 
 
 const mapStateToProps = state => ({
@@ -59,6 +60,7 @@ class UserPage extends Component {
         <Nav />
         { content }
         <InitNewRace />
+        <CheckpointMap />
       </div>
     );
   }

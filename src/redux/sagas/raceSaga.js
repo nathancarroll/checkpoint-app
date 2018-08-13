@@ -15,7 +15,8 @@ function* fetchRaces(action){
 function* newRace(action){
     try {
         const raceID = yield postRace(action.payload);
-        yield put({type: RACE_ACTIONS.SET_NEW, payload: raceID})
+        yield put({type: RACE_ACTIONS.SET_NEW, payload: raceID});
+        yield put({type: RACE_ACTIONS.FETCH_RACES});
     } catch(err) {
         console.log('error during newRace generator saga', err);
         yield err
