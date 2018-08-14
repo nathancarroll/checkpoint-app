@@ -3,4 +3,5 @@ export const RACE_ACTIONS = {
     SET_RACES: 'SET_RACES',
     POST_RACE: 'POST_RACE',
     SET_NEW: 'SET_NEW',
+    SET_ACTIVE_RACE: 'SET_ACTIVE_RACE',
 }

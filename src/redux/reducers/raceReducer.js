@@ -14,11 +14,20 @@ const newRace = (state=null, action) => {
         case RACE_ACTIONS.SET_NEW:
             state = action.payload;
     }
-    return state
+    return state;
+}
+
+const activeRace = (state=null, action) => {
+    switch (action.type){
+        case RACE_ACTIONS.SET_ACTIVE_RACE:
+            state = action.payload;
+    }
+    return state;
 }
 
 export default combineReducers({
     allRaces,
     newRace,
+    activeRace,
 })
 

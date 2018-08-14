@@ -33,8 +33,22 @@ class UserPage extends Component {
     // this.props.history.push('home');
   }
 
+  raceDetails = () => {
+    console.log('click');
+  }
+
   render() {
     let content = null;
+    const raceTableBody = this.props.allRaces.map((race) => {
+      return(
+        <tr key={race.id}>
+          <td>{race.name}</td>
+          <td>{race.race_creator}</td>
+          <td>STATUS</td>
+          <td><button onClick={this.raceDetails}>Go To Details</button></td>
+        </tr>
+      )
+    })
 
     if (this.props.user.userName) {
       content = (
@@ -51,6 +65,14 @@ class UserPage extends Component {
             Log Out
           </button>
           {JSON.stringify(this.props.allRaces)}
+          <table>
+            <thead>
+              <tr>
+                <th>Race</th><th>Creator</th><th>Status</th><th>Details</th>
+              </tr>
+            </thead>
+            <tbody>{raceTableBody}</tbody>
+          </table>
         </div>
       );
     }
