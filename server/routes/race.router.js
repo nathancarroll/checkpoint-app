@@ -31,6 +31,20 @@ router.post('/', (req, res) => {
         })
 })
 
+router.get('/checkpoints/:id', (req, res) => {
+    console.log('race checkpoints GET route', req.params.id);
+    const queryString = `SELECT * FROM checkpoint WHERE race_id = $1 ORDER BY id;`;
+    pool.query(queryString, [req.params.id])
+        .then((PGres) => {
+            console.log(PGres.rows);
+            res.send(PGres.rows)
+        })
+        .catch((err) => {
+            console.log('error during checkpoint GET', err);
+            res.sendStatus(500);
+        })
+})
+
 // router.get('/:id', (req, res) => {
 //     const queryString = `SELECT `
 // })

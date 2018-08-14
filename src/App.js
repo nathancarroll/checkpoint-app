@@ -12,6 +12,7 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
 import RacePage from './components/RacePage/RacePage';
+import RaceCheckpoints from './components/RaceCheckpoints/RaceCheckpoints';
 
 import './styles/main.css';
 
@@ -26,21 +27,26 @@ const App = () => (
           component={LoginPage}
         />
         <Route
-          path="/register"
+          exact path="/register"
           component={RegisterPage}
         />
         <Route
-          path="/user"
+          exact path="/user"
           component={UserPage}
         />
         <Route
-          path="/info"
+          exact path="/info"
           component={InfoPage}
         />
         <Route 
-          path="/race/:id"
+          exact path="/race/:id"
           component={RacePage}
         />
+        <Route
+          exact path="/race/checkpoints/:id"
+          component={RaceCheckpoints}
+        />
+
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 
