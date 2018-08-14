@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+// import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import GoogleMapReact from 'google-map-react';
+
+class Target extends Component {
+    render(){
+        return(
+            // <div height='10px' width='10px' backgroundcolor='red' />
+            <h3>MARKER</h3>
+        )
+    }
+}
 
 class NewRaceMap extends Component {
     constructor(props){
@@ -29,62 +39,99 @@ class NewRaceMap extends Component {
         console.log('fetching checkpoints');
     }
 
-    newCheckpoint = (props, map, e) => {
-        const position = {
-            latitude: e.latLng.lat(),
-            longitude: e.latLng.lng()
-        };
-        console.log(position);
+    newCheckpoint = (e) => {
+        // const position = {
+        //     latitude: e.latLng.lat(),
+        //     longitude: e.latLng.lng()
+        // };
+        // console.log(position);
+        // this.setState({
+        //     markerList: [...this.state.markerList, {
+        //         title: 'new marker',
+        //         name: 'nato2',
+        //         position: position
+        //     }]
+        // })
         this.setState({
             markerList: [...this.state.markerList, {
-                title: 'new marker',
-                name: 'nato2',
-                position: position
+                lat: e.lat,
+                lng: e.lng,
+                text: 'new marker'
             }]
         })
+        console.log(e);
     }
     
-    onMarkerClick = (props, marker, e) => {
+    onMarkerClick = (e) => {
+        console.log('click');
         console.log(e);
-        console.log(marker.title);
     }
 
     render() {
         const allMarkers = this.state.markerList.map((marker, index) => {
             return(
-                <Marker
+                <Target
                     key={index}
-                    title={marker.title}
-                    name={marker.name}
-                    position={marker.position}
-                    onClick={this.onMarkerClick}
+                    {...marker}
                 />
             )
         })
         console.log(allMarkers);
         return (
-            <div>
-                <Map
-                    google={this.props.google}
-                    zoom={14}
-                    style={style}
-                    initialCenter={{
-                        lat: 44.978185,
-                        lng: -93.081807
-                    }}
-                    onReady={this.fetchCheckpoints}
+            <div style={{ height: '100vh', width: '100%' }}> 
+                <GoogleMapReact
+                    bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
+                    defaultCenter={{lat: 44.978185, lng: -93.081808}}
+                    defaultZoom={14}
+                    onChildClick={this.onMarkerClick}
                     onClick={this.newCheckpoint}
                 >
+                    {/* <Target
+                        lat={44.978182}
+                        lng={-93.081806}
+                        text={'nato potato'}
+                    /> */}
                     {allMarkers}
-                </Map>
+                </GoogleMapReact>
             </div>
         )
     }
 };
 
-export default GoogleApiWrapper({ apiKey: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw' })(NewRaceMap);
+export default NewRaceMap;
 
-const style = {
-    width: '100%',
-    height: '100%'
-}
+// import React, { Component } from 'react';
+// import GoogleMapReact from 'google-map-react';
+
+// const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
+// class SimpleMap extends Component {
+//   static defaultProps = {
+//     center: {
+//       lat: 59.95,
+//       lng: 30.33
+//     },
+//     zoom: 11
+//   };
+
+//   render() {
+//     return (
+//       // Important! Always set the container height explicitly
+//       <div style={{ height: '100vh', width: '100%' }}>
+//         <GoogleMapReact
+//           bootstrapURLKeys={{ key:'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
+//           defaultCenter={this.props.center}
+//           defaultZoom={this.props.zoom}
+//         >
+//           <AnyReactComponent
+//             lat={59.955413}
+//             lng={30.337844}
+//             text={'Kreyser Avrora'}
+//           />
+//         </GoogleMapReact>
+//       </div>
+//     );
+//   }
+// }
+
+// export default SimpleMap;
