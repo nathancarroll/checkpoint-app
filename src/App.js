@@ -41,7 +41,12 @@ const App = () => (
         />
         <Route 
           exact path="/race/:id"
-          component={RacePage}
+          render={(props) => {
+            const link='/race/checkpoints/' + props.match.params.id;
+            return(
+              <Redirect to={link} />
+            )
+          }}
         />
         <Route
           exact path="/race/checkpoints/:id"
