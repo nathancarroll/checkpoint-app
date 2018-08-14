@@ -1,6 +1,6 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {RACE_ACTIONS} from "../actions/raceActions";
-import {getRaces, postRace, getCheckpoints} from '../requests/raceRequests';
+import {getRaces, postRace, getCheckpoints, getParticipants} from '../requests/raceRequests';
 
 function* fetchRaces(action){
     try {
@@ -33,10 +33,21 @@ function* fetchCheckpoints(action){
     }
 }
 
+function* fetchParticipants(action){
+    try{
+        const participants = yield getParticipants(action.payload);
+        yield put({type: RACE_ACTIONS.SET_PARTICIPANTS, payload: participants})
+    } catch(err) {
+        console.log('error during fetchParticipants generator saga', err);
+        yield err
+    }
+}
+
 function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.FETCH_RACES, fetchRaces);
     yield takeLatest(RACE_ACTIONS.POST_RACE, newRace);
     yield takeLatest(RACE_ACTIONS.FETCH_CHECKPOINTS, fetchCheckpoints);
+    yield takeLatest(RACE_ACTIONS.FETCH_PARTICIPANTS, fetchParticipants);
 }
 
 export default raceSaga;

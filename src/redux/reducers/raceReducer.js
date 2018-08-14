@@ -33,10 +33,19 @@ const checkpoints = (state=null, action) => {
     return state;
 }
 
+const participants = (state=null, action) => {
+    switch (action.type){
+        case RACE_ACTIONS.SET_PARTICIPANTS:
+            state = action.payload
+    }
+    return state;
+}
+
 export default combineReducers({
     allRaces,
     newRace,
     activeRace,
     checkpoints,
+    participants,
 })
 

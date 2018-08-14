@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
 import {connect} from 'react-redux';
 
-class RaceCheckpoints extends Component{
+class RaceParticipants extends Component{
     raceID = this.props.match.params.id;
 
     componentDidMount = () => {
         console.log('hello');
         this.props.dispatch({
-            type: 'FETCH_CHECKPOINTS',
+            type: 'FETCH_PARTICIPANTS',
             payload: this.raceID
         })
     }
@@ -17,14 +17,14 @@ class RaceCheckpoints extends Component{
         return(
             <div>
                 <RaceDetailsNav raceID={this.raceID} />
-                {JSON.stringify(this.props.checkpoints)}
+                {JSON.stringify(this.props.participants)}
             </div>
         )
     }
 };
 
 const mapStateToProps = (state) => ({
-    checkpoints: state.race.checkpoints
+    participants: state.race.participants
 })
 
-export default connect(mapStateToProps)(RaceCheckpoints);
+export default connect(mapStateToProps)(RaceParticipants);

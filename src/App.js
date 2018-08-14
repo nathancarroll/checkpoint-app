@@ -13,6 +13,7 @@ import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
 import RacePage from './components/RacePage/RacePage';
 import RaceCheckpoints from './components/RaceCheckpoints/RaceCheckpoints';
+import RaceParticipants from './components/RaceParticipants/RaceParticipants';
 
 import './styles/main.css';
 
@@ -46,7 +47,10 @@ const App = () => (
           exact path="/race/checkpoints/:id"
           component={RaceCheckpoints}
         />
-
+        <Route
+          exact path="/race/racers/:id"
+          component={RaceParticipants}
+        />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 

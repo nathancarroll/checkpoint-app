@@ -23,11 +23,22 @@ export function postRace(raceName){
 
 export function getCheckpoints(raceID){
     console.log('getCheckpoints function called with', raceID);
-    return axios.get(`api/race/checkpoints/${raceID}`)
+    return axios.get(`/api/race/checkpoints/${raceID}`)
         .then((res) => {
             return res.data
         })
         .catch((err) => {
             return 'error during get: ' + err
+        })
+}
+
+export function getParticipants(raceID){
+    console.log('getParticipants function called with', raceID);
+    return axios.get(`/api/race/participants/${raceID}`)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return 'error during participants get: ' + err
         })
 }
