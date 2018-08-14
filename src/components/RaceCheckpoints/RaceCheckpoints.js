@@ -13,11 +13,16 @@ class RaceCheckpoints extends Component{
         })
     }
 
+    validateCheckin = () => {
+        navigator.geolocation.getCurrentPosition((position) => console.log(position.coords));
+    }
+
     render(){
         return(
             <div>
                 <RaceDetailsNav raceID={this.raceID} />
                 {JSON.stringify(this.props.checkpoints)}
+                <button onClick={this.validateCheckin}>Check In</button>
             </div>
         )
     }

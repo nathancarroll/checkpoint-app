@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
-class CheckpointMap extends Component{
-    newCheckpoint = (mapProps, map, clickEvent) => {
-        console.log(clickEvent.latLng);
-    }
-
+class NewRaceMap extends Component{
     fetchCheckpoints = () => {
-
+        console.log('fetching checkpoints');
+    }
+    
+    newCheckpoint = (mapProps, map, clickEvent) => {
+        const position = {
+            latitude: clickEvent.latLng.lat(),
+            longitude: clickEvent.latLng.lng()
+        };
+        console.log(position);
     }
 
     render(){
         return(
-            <Map 
+            <div>
+                <Map 
                 google={this.props.google} 
                 zoom={14}
                 style={style}
@@ -23,13 +28,14 @@ class CheckpointMap extends Component{
                 onReady={this.fetchCheckpoints}
                 onClick={this.newCheckpoint}
                 />
+            </div>
         )
     }
 };
 
-export default GoogleApiWrapper({apiKey: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'})(CheckpointMap);
+export default GoogleApiWrapper({apiKey: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'})(NewRaceMap);
 
 const style = {
-    width: '80%',
-    height: '60%'
+    width: '100%',
+    height: '100%'
 }
