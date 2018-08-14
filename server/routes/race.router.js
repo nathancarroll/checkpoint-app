@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    const queryString = `SELECT name, start_time, person.username AS "race_creator" 
+    const queryString = `SELECT race.id, name, start_time, person.username AS "race_creator" 
                         FROM race JOIN person ON race.creator = person.id;`;
     pool.query(queryString)
         .then((PGres) => {

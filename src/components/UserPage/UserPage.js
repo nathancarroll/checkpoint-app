@@ -10,6 +10,8 @@ import { triggerLogout } from '../../redux/actions/loginActions';
 import InitNewRace from '../../components/InitNewRace/InitNewRace';
 import CheckpointMap from '../../components/CheckpointMap/CheckpointMap';
 
+import {Link} from 'react-router-dom';
+
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -35,17 +37,19 @@ class UserPage extends Component {
 
   raceDetails = () => {
     console.log('click');
+
   }
 
   render() {
     let content = null;
     const raceTableBody = this.props.allRaces.map((race) => {
+      const raceLink = '/race/' + race.id;
       return(
         <tr key={race.id}>
           <td>{race.name}</td>
           <td>{race.race_creator}</td>
           <td>STATUS</td>
-          <td><button onClick={this.raceDetails}>Go To Details</button></td>
+          <td><Link to={raceLink}>Go To Details</Link></td>
         </tr>
       )
     })
