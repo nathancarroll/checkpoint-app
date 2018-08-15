@@ -6,12 +6,17 @@ class Target extends Component {
     render(){
         const showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
         return(
-            <div className={showHideClassName}>
-            <section className="modal-main">
-              {this.props.children}
-              <button onClick={this.props.onClick}>close</button>
-            </section>
-          </div>
+            <React.Fragment>
+                <div className={showHideClassName}>
+                <section className="modal-main">
+                    <input name="checkpoint-name" placeholder="name" />
+                    <input name="checkpoint-description" placeholder="description" />
+                    <button name="cancel" onClick={this.props.onClick}>Cancel</button>
+                    <button name="save" onClick={this.props.onClick}>Save</button>
+                </section>
+                </div>
+                <h3>MARKER</h3>
+            </React.Fragment>
         )
     }
 }
@@ -30,7 +35,7 @@ class NewRaceMap extends Component {
     }
 
     newCheckpoint = (e) => {
-        if (e.event.target.innerHTML === 'close') return;
+        if (this.state.showModal === true) return;
         this.setState({
             markerList: [...this.state.markerList, {
                 lat: e.lat,
@@ -43,11 +48,7 @@ class NewRaceMap extends Component {
     }
 
     closeModal = (e) => {
-        e.stopPropagation();
-        e.nativeEvent.stopImmediatePropagation();
-        console.log(e.isDefaultPrevented());
-        console.log(e.isPropagationStopped());
-        console.log(e);
+        console.log(e.target.name);
         this.setState({
             showModal: false
         })
