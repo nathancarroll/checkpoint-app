@@ -15,6 +15,7 @@ import RacePage from './components/RacePage/RacePage';
 import RaceCheckpoints from './components/RaceCheckpoints/RaceCheckpoints';
 import RaceParticipants from './components/RaceParticipants/RaceParticipants';
 import NewRaceMap from './components/NewRaceMap/NewRaceMap';
+import NewRaceListView from './components/NewRaceListView/NewRaceListView';
 
 import './styles/main.css';
 
@@ -60,6 +61,10 @@ const App = () => (
         <Route 
           exact path="/race/new/map/:id"
           component={NewRaceMap}
+        />
+        <Route
+          exact path="/race/new/checkpoints/:id"
+          component={NewRaceListView}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />

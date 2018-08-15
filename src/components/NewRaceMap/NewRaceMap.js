@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import './NewRaceMap.css';
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
+import {Link} from 'react-router-dom';
 
 class Target extends Component {
     render(){
@@ -106,6 +107,7 @@ class NewRaceMap extends Component {
     }
 
     render() {
+        const linkBack = `/race/new/checkpoints/${this.props.match.params.id}`;
         const allMarkers = this.state.markerList.map((marker, index) => {
             return(
                 <Target
@@ -131,6 +133,7 @@ class NewRaceMap extends Component {
 
                     {allMarkers}
                 </GoogleMapReact>
+                <h3><Link to={linkBack}>BACK</Link></h3>
             </div>
         )
     }

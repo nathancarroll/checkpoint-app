@@ -20,7 +20,6 @@ class InitNewRace extends Component{
         console.log('submitting', this.state.newRaceName);
         this.props.dispatch({type: RACE_ACTIONS.POST_RACE, payload: this.state.newRaceName})
         this.setState({newRaceName: ''})
-        // window.location.href = '/#/race/new/map';
     }
 
     render(){
