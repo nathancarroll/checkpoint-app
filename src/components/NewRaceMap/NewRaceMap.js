@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import './NewRaceMap.css';
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
 class Target extends Component {
     render(){
@@ -38,12 +40,22 @@ class NewRaceMap extends Component {
         }
     }
 
+    saveCheckpoint = (checkpointObject) => {
+        console.log(this.props.match.params.id);
+        this.props.dispatch({
+            type: RACE_ACTIONS.SAVE_CHECKPOINT, 
+            payload: {
+                raceID: this.props.match.params.id,
+                checkpoint: checkpointObject,
+            }
+        })
+    }
+
     fetchCheckpoints = () => {
         console.log('fetching checkpoints');
     }
 
     handleChange = (e) => {
-        console.log('changin');
         this.setState({
             newCheckpoint: {
                 ...this.state.newCheckpoint,
@@ -78,6 +90,10 @@ class NewRaceMap extends Component {
             })
         } else if (e.target.name === 'save'){
             console.log('saving the following checkpoint to the database', this.state.newCheckpoint);
+            this.saveCheckpoint(this.state.newCheckpoint);
+            this.setState({
+                newCheckpoint: emptyCheckpoint
+            })
         }
         this.setState({
             showModal: false
@@ -112,11 +128,7 @@ class NewRaceMap extends Component {
                     onClick={this.newCheckpoint}
                     options={{gestureHandling: 'greedy'}}
                 >
-                    {/* <Target
-                        lat={44.978182}
-                        lng={-93.081806}
-                        text={'nato potato'}
-                    /> */}
+
                     {allMarkers}
                 </GoogleMapReact>
             </div>
@@ -124,4 +136,4 @@ class NewRaceMap extends Component {
     }
 };
 
-export default NewRaceMap;
+export default connect()(NewRaceMap);

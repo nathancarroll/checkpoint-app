@@ -1,6 +1,6 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {RACE_ACTIONS} from "../actions/raceActions";
-import {getRaces, postRace, getCheckpoints, getParticipants} from '../requests/raceRequests';
+import {getRaces, postRace, getCheckpoints, getParticipants, postCheckpoint} from '../requests/raceRequests';
 
 function* fetchRaces(action){
     try {
@@ -17,6 +17,7 @@ function* newRace(action){
         const raceID = yield postRace(action.payload);
         yield put({type: RACE_ACTIONS.SET_NEW, payload: raceID});
         yield put({type: RACE_ACTIONS.FETCH_RACES});
+        yield window.location.href = `/#/race/new/map/${raceID}`;
     } catch(err) {
         console.log('error during newRace generator saga', err);
         yield err
@@ -43,11 +44,22 @@ function* fetchParticipants(action){
     }
 }
 
+function* saveCheckpoint(action){
+    try{
+        yield postCheckpoint(action.payload.raceID, action.payload.checkpoint)
+        yield put({type: RACE_ACTIONS.FETCH_CHECKPOINTS, payload: action.payload.raceID})
+    } catch(err) {
+        console.log('error during saveCheckpoint generator saga');
+        yield err
+    }
+}
+
 function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.FETCH_RACES, fetchRaces);
     yield takeLatest(RACE_ACTIONS.POST_RACE, newRace);
     yield takeLatest(RACE_ACTIONS.FETCH_CHECKPOINTS, fetchCheckpoints);
     yield takeLatest(RACE_ACTIONS.FETCH_PARTICIPANTS, fetchParticipants);
+    yield takeLatest(RACE_ACTIONS.SAVE_CHECKPOINT, saveCheckpoint);
 }
 
 export default raceSaga;

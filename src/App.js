@@ -58,7 +58,7 @@ const App = () => (
           component={RaceParticipants}
         />
         <Route 
-          exact path="/race/new/map"
+          exact path="/race/new/map/:id"
           component={NewRaceMap}
         />
         {/* OTHERWISE (no path!) */}
