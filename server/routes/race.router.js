@@ -59,6 +59,22 @@ router.get('/participants/:id', (req, res) => {
         })
 })
 
+router.post('/checkpoints/:id', (req, res) => {
+    console.log('race checkpoint POST route', req.params.id);
+    console.log(req.body);
+    const queryString = `INSERT INTO checkpoint (latitude, longitude, name, description, race_id)
+                        VALUES ($1, $2, $3, $4, $5);`;
+    pool.query(queryString, [req.body.lat, req.body.lng, req.body.checkpointName, req.body.checkpointDescription, req.params.id])
+        .then((PGres) => {
+            console.log(PGres);
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log('error during checkpoint POST', err);
+            res.sendStatus(500);
+        })
+})
+
 // router.get('/:id', (req, res) => {
 //     const queryString = `SELECT `
 // })

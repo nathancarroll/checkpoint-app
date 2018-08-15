@@ -46,7 +46,7 @@ export function getParticipants(raceID){
 
 export function postCheckpoint(raceID, checkpointObject){
     console.log('postCheckpoint function called with', raceID, checkpointObject);
-    return axios.post(`/api/race/checkpoints/${raceID}`)
+    return axios.post(`/api/race/checkpoints/${raceID}`, checkpointObject)
         .then((res) => {
             return res.data
         })
