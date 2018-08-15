@@ -9,8 +9,8 @@ class Target extends Component {
             <React.Fragment>
                 <div className={showHideClassName}>
                 <section className="modal-main">
-                    <input name="checkpoint-name" placeholder="name" />
-                    <input name="checkpoint-description" placeholder="description" />
+                    <input name="checkpointName" placeholder="name" onChange={this.props.onChange}/>
+                    <input name="checkpointDescription" placeholder="description" onChange={this.props.onChange}/>
                     <button name="cancel" onClick={this.props.onClick}>Cancel</button>
                     <button name="save" onClick={this.props.onClick}>Save</button>
                 </section>
@@ -21,10 +21,18 @@ class Target extends Component {
     }
 }
 
+const emptyCheckpoint = {
+    lat: null,
+    lng: null,
+    checkpointName: '',
+    checkpointDescription: ''
+}
+
 class NewRaceMap extends Component {
     constructor(props){
         super(props)
         this.state = {
+            newCheckpoint: emptyCheckpoint,
             markerList: [],
             showModal: false
         }
@@ -34,13 +42,27 @@ class NewRaceMap extends Component {
         console.log('fetching checkpoints');
     }
 
+    handleChange = (e) => {
+        console.log('changin');
+        this.setState({
+            newCheckpoint: {
+                ...this.state.newCheckpoint,
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+
     newCheckpoint = (e) => {
         if (this.state.showModal === true) return;
         this.setState({
+            newCheckpoint: {
+                ...this.state.newCheckpoint,
+                lat: e.lat,
+                lng: e.lng
+            },
             markerList: [...this.state.markerList, {
                 lat: e.lat,
                 lng: e.lng,
-                text: 'new marker'
             }],
             showModal: true
         })
@@ -49,6 +71,14 @@ class NewRaceMap extends Component {
 
     closeModal = (e) => {
         console.log(e.target.name);
+        if (e.target.name === 'cancel'){
+            this.setState({
+                newCheckpoint: emptyCheckpoint,
+                markerList: this.state.markerList.slice(0, this.state.markerList.length-1)
+            })
+        } else if (e.target.name === 'save'){
+            console.log('saving the following checkpoint to the database', this.state.newCheckpoint);
+        }
         this.setState({
             showModal: false
         })
@@ -64,6 +94,7 @@ class NewRaceMap extends Component {
             return(
                 <Target
                     onClick={this.closeModal}
+                    onChange={this.handleChange}
                     show={this.state.showModal}
                     key={index}
                     {...marker}
