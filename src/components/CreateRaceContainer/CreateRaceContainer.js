@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
 import CreateRaceCheckpointList from '../CreateRaceCheckpointList/CreateRaceCheckpointList';
 import CreateRaceMapView from '../CreateRaceMapView/CreateRaceMapView';
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
 class CreateRaceContainer extends Component{
     constructor(props){
@@ -38,6 +41,13 @@ class CreateRaceContainer extends Component{
     submitRace = () => {
         console.log('submitting race now. name:', this.state.raceName);
         console.log('checkpoints:', this.state.checkpoints);
+        this.props.dispatch({
+            type: RACE_ACTIONS.POST_RACE,
+            payload: {
+                name: this.state.raceName,
+                checkpoints: this.state.checkpoints
+            }
+        })
         this.setState({
             checkpoints: [],
             raceName: ''
@@ -70,4 +80,4 @@ class CreateRaceContainer extends Component{
     }
 };
 
-export default CreateRaceContainer;
+export default connect()(CreateRaceContainer);

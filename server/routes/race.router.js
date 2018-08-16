@@ -59,20 +59,38 @@ router.get('/participants/:id', (req, res) => {
         })
 })
 
+// router.post('/checkpoints/:id', (req, res) => {
+//     console.log('race checkpoint POST route', req.params.id);
+//     console.log(req.body);
+//     const queryString = `INSERT INTO checkpoint (latitude, longitude, name, description, race_id)
+//                         VALUES ($1, $2, $3, $4, $5);`;
+//     pool.query(queryString, [req.body.lat, req.body.lng, req.body.checkpointName, req.body.checkpointDescription, req.params.id])
+//         .then((PGres) => {
+//             console.log(PGres);
+//             res.sendStatus(201);
+//         })
+//         .catch((err) => {
+//             console.log('error during checkpoint POST', err);
+//             res.sendStatus(500);
+//         })
+// })
+
+// this one accepts an array of checkpoints that can all be added at once 
 router.post('/checkpoints/:id', (req, res) => {
-    console.log('race checkpoint POST route', req.params.id);
-    console.log(req.body);
-    const queryString = `INSERT INTO checkpoint (latitude, longitude, name, description, race_id)
-                        VALUES ($1, $2, $3, $4, $5);`;
-    pool.query(queryString, [req.body.lat, req.body.lng, req.body.checkpointName, req.body.checkpointDescription, req.params.id])
-        .then((PGres) => {
-            console.log(PGres);
-            res.sendStatus(201);
-        })
-        .catch((err) => {
-            console.log('error during checkpoint POST', err);
-            res.sendStatus(500);
-        })
+    console.log('race checkpoint multiple POST route', req.params.id);
+    for (checkpoint of req.body){
+        console.log(checkpoint);
+        const queryString = `INSERT INTO checkpoint (latitude, longitude, name, description, race_id)
+                             VALUES ($1, $2, $3, $4, $5);`;
+        pool.query(queryString, [checkpoint.lat, checkpoint.lng, checkpoint.name, checkpoint.description, req.params.id])
+            .then((PGres) => {
+                console.log(PGres);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+    res.sendStatus(201);
 })
 
 // router.get('/:id', (req, res) => {

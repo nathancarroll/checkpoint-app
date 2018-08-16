@@ -54,3 +54,14 @@ export function postCheckpoint(raceID, checkpointObject){
             return 'error during checkpoint post: ' + err
         })
 }
+
+export function postCheckpoints(raceID, checkpoints){
+    console.log('insert checkpoints function called with', raceID, checkpoints);
+    return axios.post(`/api/race/checkpoints/${raceID}`, checkpoints)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return 'error during checkpoint array post: ' + err
+        })
+}
