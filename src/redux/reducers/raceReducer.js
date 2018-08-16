@@ -41,11 +41,20 @@ const participants = (state=null, action) => {
     return state;
 }
 
+const startTime = (state=null, action) => {
+    switch (action.type){
+        case RACE_ACTIONS.SET_START:
+            state = action.payload
+    }
+    return state;
+}
+
 export default combineReducers({
     allRaces,
     newRace,
     activeRace,
     checkpoints,
     participants,
+    startTime
 })
 

@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
 import {connect} from 'react-redux';
 
+import RaceClock from '../RaceClock/RaceClock';
+
 class RaceCheckpoints extends Component{
     raceID = this.props.match.params.id;
 
     componentDidMount = () => {
-        console.log('hello');
         this.props.dispatch({
             type: 'FETCH_CHECKPOINTS',
             payload: this.raceID
@@ -23,6 +24,7 @@ class RaceCheckpoints extends Component{
                 <RaceDetailsNav raceID={this.raceID} />
                 {JSON.stringify(this.props.checkpoints)}
                 <button onClick={this.validateCheckin}>Check In</button>
+                <RaceClock raceID={this.raceID}/>
             </div>
         )
     }
