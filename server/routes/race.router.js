@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     console.log('race POST route. user:', req.user);
     console.log('POST body:', req.body.raceName);
-    const queryString = `INSERT INTO race (name, creator) VALUES ($1, $2, $3) RETURNING id;`;
+    const queryString = `INSERT INTO race (name, creator) VALUES ($1, $2) RETURNING id;`;
     pool.query(queryString, [req.body.raceName, req.user.id])
         .then((PGres) => {
             res.send(PGres.rows);

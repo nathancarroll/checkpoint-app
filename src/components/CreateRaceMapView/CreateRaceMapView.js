@@ -30,6 +30,7 @@ class CreateRaceMapView extends Component{
     // this insane workaround is to make sure that click events on the modal dont also trigger the 
     // mapclick handler to initialize another modal
     handleMapClick = (e) => {
+        console.log('handleMapClick');
         if (this.modalAction){
             this.setState({
                 showModal: false,
@@ -43,7 +44,6 @@ class CreateRaceMapView extends Component{
             this.modalAction = false;
             return;
         }
-        console.log('passing through');
         this.setState({
             showModal: true,
             coords: {
@@ -51,14 +51,13 @@ class CreateRaceMapView extends Component{
                 lng: e.lng,
             }
         })
-        // this.props.handleMapClick(e);
     }
 
     handleModalClick = (e) => {
+        console.log('handleModalClick');
+        e.stopPropagation();
         if (e.target.name === 'cancel'){
-            console.log('cancel');
         } else if (e.target.name === 'save'){
-            console.log('save');
             const newCheckpoint = {
                 lat: this.state.coords.lat,
                 lng: this.state.coords.lng,
