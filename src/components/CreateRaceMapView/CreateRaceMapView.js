@@ -12,7 +12,11 @@ class CreateRaceMapView extends Component{
         this.state = {
             showModal: false,
             checkpointName: '',
-            checkpointDescription: ''
+            checkpointDescription: '',
+            coords: {
+                lat: null,
+                lng: null
+            }
         }
         this.modalAction = false
     }
@@ -26,20 +30,28 @@ class CreateRaceMapView extends Component{
     // this insane workaround is to make sure that click events on the modal dont also trigger the 
     // mapclick handler to initialize another modal
     handleMapClick = (e) => {
-        if (this.modalAction || this.state.showModal){
+        if (this.modalAction){
             this.setState({
                 showModal: false,
                 checkpointName: '',
-                checkpointDescription: ''
+                checkpointDescription: '',
+                coords: {
+                    lat: null,
+                    lng: null
+                }
             })
             this.modalAction = false;
             return;
         }
         console.log('passing through');
         this.setState({
-            showModal: true
+            showModal: true,
+            coords: {
+                lat: e.lat,
+                lng: e.lng,
+            }
         })
-        this.props.handleMapClick(e);
+        // this.props.handleMapClick(e);
     }
 
     handleModalClick = (e) => {
@@ -47,7 +59,13 @@ class CreateRaceMapView extends Component{
             console.log('cancel');
         } else if (e.target.name === 'save'){
             console.log('save');
-            this.props.handleCheckpointSave(this.state.checkpointName, this.state.checkpointDescription)
+            const newCheckpoint = {
+                lat: this.state.coords.lat,
+                lng: this.state.coords.lng,
+                name: this.state.checkpointName,
+                description: this.state.checkpointDescription
+            }
+            this.props.handleCheckpointSave(newCheckpoint)
         }
         this.modalAction = true;
     }
@@ -73,6 +91,7 @@ class CreateRaceMapView extends Component{
                     options={{gestureHandling: 'greedy'}}
                 >
                     {allCheckpoints}
+                    <MapCheckpoint {...this.state.coords} />
                     <NewCheckpointModal
                         showModal={this.state.showModal}
                         handleModalChange={this.handleModalChange}

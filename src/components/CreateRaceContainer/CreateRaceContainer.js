@@ -2,17 +2,11 @@ import React, {Component} from 'react';
 import CreateRaceCheckpointList from '../CreateRaceCheckpointList/CreateRaceCheckpointList';
 import CreateRaceMapView from '../CreateRaceMapView/CreateRaceMapView';
 
-const initialCoords = {
-    lat: null,
-    lng: null,
-}
-
 class CreateRaceContainer extends Component{
     constructor(props){
         super(props)
         this.state = {
             showMap: true,
-            newCoords: initialCoords,
             checkpoints: [],
             raceName: ''
         }
@@ -28,29 +22,10 @@ class CreateRaceContainer extends Component{
         console.log('handle checkpoint click');
     }
 
-    handleCheckpointSave = (name, description) => {
-        const newCheckpoint = {
-            lat: this.state.newCoords.lat,
-            lng: this.state.newCoords.lng,
-            name: name,
-            description: description
-        }
+    handleCheckpointSave = (newCheckpoint) => {
         console.log(newCheckpoint);
         this.setState({
             checkpoints: [...this.state.checkpoints, newCheckpoint]
-        })
-    }
-
-    handleMapClick = (e) => {
-        console.log('handle map click');
-        console.log(e.lat);
-        console.log(e.lng);
-        this.setState({
-            newCoords: {
-                lat: e.lat,
-                lng: e.lng
-            },
-            checkpoints: [...this.state.checkpoints, {lat: e.lat, lng: e.lng}]
         })
     }
 
@@ -64,7 +39,6 @@ class CreateRaceContainer extends Component{
         console.log('submitting race now. name:', this.state.raceName);
         console.log('checkpoints:', this.state.checkpoints);
         this.setState({
-            newCoords: initialCoords,
             checkpoints: [],
             raceName: ''
         })
