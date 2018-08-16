@@ -110,4 +110,15 @@ router.post('/checkpoints/:id', (req, res) => {
     }
 })
 
+// THIS ROUTE RETURNS THE START TIME OF A GIVEN RACE
+router.get('/time/:id', (req, res) => {
+    console.log('race time GET route', req.params.id);
+    const queryString = `SELECT start_time FROM race WHERE id = $1;`;
+    pool.query(queryString, [req.params.id])
+        .then((PGres) => {
+            console.log(PGres.rows);
+            res.send(PGres.rows[0].start_time)
+        })
+});
+
 module.exports = router;

@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import moment from 'moment';
+import axios from 'axios';
+
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
 class RaceClock extends Component{
     constructor(props){
@@ -11,9 +15,22 @@ class RaceClock extends Component{
 
     componentDidMount = () => {
         setInterval(this.update, 1000)
-        // this.setState({
-        //     timeElapsed: moment().format()
+        // this.props.dispatch({
+        //     type: RACE_ACTIONS.FETCH_TIME,
+        //     payload: this.props.raceID
         // })
+        axios.get(`/api/race/time/${this.props.raceID}`)
+            .then((res) => {
+                console.log(res.data);
+                console.log(moment(res.data).format('h:mm:ss'));
+                console.log('time elapsed:');
+                const duration = moment().diff(moment(res.data), 'hours')
+                console.log(duration);
+            })
+            .catch((err) => {
+                console.log('error during axios get', err);
+                return;
+            })
     }
 
     update = () => {
@@ -30,4 +47,4 @@ class RaceClock extends Component{
     }
 };
 
-export default RaceClock;
+export default connect()(RaceClock);

@@ -45,7 +45,7 @@ const App = () => (
         <Route 
           exact path="/race/:id"
           render={(props) => {
-            const link='/race/checkpoints/' + props.match.params.id;
+            const link='/race/racers/' + props.match.params.id;
             return(
               <Redirect to={link} />
             )
