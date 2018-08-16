@@ -76,6 +76,10 @@ function fetchDetails(action){
 function* postParticipant(action){
     try{
         yield saveParticipant(action.payload)
+        yield put({
+            type: RACE_ACTIONS.FETCH_PARTICIPANTS,
+            payload: action.payload
+        })
     } catch(err) {
         console.log('error during postParticipant generator saga', err);
         yield err
