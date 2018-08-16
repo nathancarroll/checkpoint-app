@@ -1,5 +1,6 @@
 import {put, takeLatest} from 'redux-saga/effects';
-import {RACE_ACTIONS} from "../actions/raceActions";
+import {RACE_ACTIONS} from '../actions/raceActions';
+import {USER_ACTIONS} from '../actions/userActions';
 import {getRaces, postRace, getCheckpoints, getParticipants, postCheckpoint, postCheckpoints, saveParticipant, putStart} from '../requests/raceRequests';
 
 function* fetchRaces(action){
@@ -71,6 +72,9 @@ function* insertCheckpoints(action){
 
 function* fetchDetails(action){
     yield put({
+        type: USER_ACTIONS.FETCH_USER
+    })
+    yield put({
         type: RACE_ACTIONS.FETCH_CHECKPOINTS,
         payload: action.payload
     })
@@ -78,6 +82,7 @@ function* fetchDetails(action){
         type: RACE_ACTIONS.FETCH_PARTICIPANTS,
         payload: action.payload
     })
+    
 }
 
 function* postParticipant(action){
