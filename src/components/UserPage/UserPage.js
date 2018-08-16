@@ -8,7 +8,6 @@ import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 
 import InitNewRace from '../../components/InitNewRace/InitNewRace';
-import CheckpointMap from '../../components/CheckpointMap/CheckpointMap';
 
 import {Link} from 'react-router-dom';
 
@@ -32,7 +31,6 @@ class UserPage extends Component {
 
   logout = () => {
     this.props.dispatch(triggerLogout());
-    // this.props.history.push('home');
   }
 
   raceDetails = () => {
@@ -48,11 +46,19 @@ class UserPage extends Component {
     let content = null;
     const raceTableBody = this.props.allRaces.map((race) => {
       const raceLink = '/race/' + race.id;
+      let status;
+      if (race.start_time && race.finish_time){
+        status = 'completed';
+      } else if (race.start_time){
+        status = 'in progress';
+      } else {
+        status = 'registering';
+      }
       return(
         <tr key={race.id}>
           <td>{race.name}</td>
           <td>{race.race_creator}</td>
-          <td>STATUS</td>
+          <td>{status}</td>
           <td><Link to={raceLink}>Go To Details</Link></td>
         </tr>
       )
@@ -72,7 +78,6 @@ class UserPage extends Component {
           >
             Log Out
           </button>
-          {JSON.stringify(this.props.allRaces)}
           <table>
             <thead>
               <tr>
@@ -90,7 +95,6 @@ class UserPage extends Component {
         <Nav />
         { content }
         <button onClick={this.handleNewRace}>Create a Race</button>
-        <CheckpointMap />
       </div>
     );
   }
