@@ -67,6 +67,10 @@ function* insertCheckpoints(action){
     }
 }
 
+function fetchDetails(action){
+    return
+}
+
 function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.FETCH_RACES, fetchRaces);
     yield takeLatest(RACE_ACTIONS.POST_RACE, newRace);
@@ -74,6 +78,7 @@ function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.FETCH_PARTICIPANTS, fetchParticipants);
     yield takeLatest(RACE_ACTIONS.SAVE_CHECKPOINT, saveCheckpoint);
     yield takeLatest(RACE_ACTIONS.INSERT_CHECKPOINTS, insertCheckpoints);
+    yield takeLatest(RACE_ACTIONS.FETCH_DETAILS, fetchDetails);
 }
 
 export default raceSaga;
