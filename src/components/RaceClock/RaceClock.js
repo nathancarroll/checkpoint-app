@@ -1,19 +1,23 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 
 class RaceClock extends Component{
     constructor(props){
         super(props)
         this.state = {
-            timeElapsed = 0
+            timeElapsed: 0
         }
     }
 
     componentDidMount = () => {
-        setInterval(update, 1000)
+        setInterval(this.update, 1000)
+        // this.setState({
+        //     timeElapsed: moment().format()
+        // })
     }
 
     update = () => {
-        const timeElapsed = moment() - this.props.start;
+        const timeElapsed = moment().format('h:mm:ss');
         this.setState({
             timeElapsed: timeElapsed
         })

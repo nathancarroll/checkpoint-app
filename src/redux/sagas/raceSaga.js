@@ -21,7 +21,7 @@ function* newRace(action){
             checkpoints: action.payload.checkpoints
         }});
         yield put({type: RACE_ACTIONS.FETCH_RACES});
-        // yield window.location.href = `/#/race/new/map/${raceID}`;
+        yield window.location.href = `/#/user`;
     } catch(err) {
         console.log('error during newRace generator saga', err);
         yield err
