@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import CreateRaceCheckpointList from '../CreateRaceCheckpointList/CreateRaceCheckpointList';
 import CreateRaceMapView from '../CreateRaceMapView/CreateRaceMapView';
@@ -67,6 +68,7 @@ class CreateRaceContainer extends Component{
         } else {
             content = (
                     <React.Fragment>
+                    <Link to="/#/user">Cancel</Link>
                     <button onClick={this.toggleView}>Add more checkpoints</button>
                     <input onChange={this.handleNameChange} placeholder="name your race" value={this.state.raceName} />
                     <button onClick={this.submitRace}>Submit Race</button>
