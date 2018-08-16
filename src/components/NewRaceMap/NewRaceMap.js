@@ -25,8 +25,8 @@ class Target extends Component {
 }
 
 const emptyCheckpoint = {
-    lat: null,
-    lng: null,
+    latitude: null,
+    longitude: null,
     checkpointName: '',
     checkpointDescription: ''
 }
@@ -52,8 +52,11 @@ class NewRaceMap extends Component {
         })
     }
 
-    fetchCheckpoints = () => {
-        console.log('fetching checkpoints');
+    componentDidMount = () => {
+        this.props.dispatch({
+            type: RACE_ACTIONS.FETCH_CHECKPOINTS,
+            payload: this.props.match.params.id
+        })
     }
 
     handleChange = (e) => {
@@ -70,12 +73,12 @@ class NewRaceMap extends Component {
         this.setState({
             newCheckpoint: {
                 ...this.state.newCheckpoint,
-                lat: e.lat,
-                lng: e.lng
+                latitude: e.lat,
+                longitude: e.lng
             },
             markerList: [...this.state.markerList, {
-                lat: e.lat,
-                lng: e.lng,
+                latitude: e.lat,
+                longitude: e.lng,
             }],
             showModal: true
         })
@@ -108,13 +111,15 @@ class NewRaceMap extends Component {
 
     render() {
         const linkBack = `/race/new/checkpoints/${this.props.match.params.id}`;
-        const allMarkers = this.state.markerList.map((marker, index) => {
+        const allMarkers = this.props.race.checkpoints.map((marker, index) => {
             return(
                 <Target
                     onClick={this.closeModal}
                     onChange={this.handleChange}
                     show={this.state.showModal}
                     key={index}
+                    lat={marker.latitude}
+                    lng={marker.longitude}
                     {...marker}
                 />
             )
@@ -139,4 +144,6 @@ class NewRaceMap extends Component {
     }
 };
 
-export default connect()(NewRaceMap);
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(NewRaceMap);

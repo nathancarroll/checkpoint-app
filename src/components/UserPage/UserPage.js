@@ -40,6 +40,10 @@ class UserPage extends Component {
 
   }
 
+  handleNewRace = () => {
+    window.location.href = '/#/newrace'
+  }
+
   render() {
     let content = null;
     const raceTableBody = this.props.allRaces.map((race) => {
@@ -85,7 +89,7 @@ class UserPage extends Component {
       <div>
         <Nav />
         { content }
-        <InitNewRace />
+        <button onClick={this.handleNewRace}>Create a Race</button>
         <CheckpointMap />
       </div>
     );
