@@ -17,6 +17,7 @@ import RaceParticipants from './components/RaceParticipants/RaceParticipants';
 import NewRaceMap from './components/NewRaceMap/NewRaceMap';
 import NewRaceListView from './components/NewRaceListView/NewRaceListView';
 import CreateRaceContainer from './components/CreateRaceContainer/CreateRaceContainer';
+import RaceDetailsContainer from './components/RaceDetailsContainer/RaceDetailsContainer';
 
 import './styles/main.css';
 
@@ -70,6 +71,10 @@ const App = () => (
         <Route
           exact path="/newrace"
           component={CreateRaceContainer}
+        />
+        <Route
+          exact path="/racedetails/:id"
+          component={RaceDetailsContainer}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />

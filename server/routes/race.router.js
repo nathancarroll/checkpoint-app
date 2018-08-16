@@ -63,7 +63,7 @@ router.get('/checkpoints/:id', (req, res) => {
                         res.sendStatus(500)
                     })
             } else {
-                const queryString = `SELECT * FROM checkpoint ORDER BY id 
+                const queryString = `SELECT * FROM checkpoint WHERE race_id = $2 ORDER BY id 
                                     LIMIT (SELECT COUNT(*) AS "checkpoints_reached" 
                                     FROM person_checkpoint JOIN checkpoint 
                                     ON person_checkpoint.checkpoint_id = checkpoint.id 

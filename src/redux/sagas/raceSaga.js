@@ -69,8 +69,15 @@ function* insertCheckpoints(action){
     }
 }
 
-function fetchDetails(action){
-    return
+function* fetchDetails(action){
+    yield put({
+        type: RACE_ACTIONS.FETCH_CHECKPOINTS,
+        payload: action.payload
+    })
+    yield put({
+        type: RACE_ACTIONS.FETCH_PARTICIPANTS,
+        payload: action.payload
+    })
 }
 
 function* postParticipant(action){
