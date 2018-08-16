@@ -121,4 +121,19 @@ router.get('/time/:id', (req, res) => {
         })
 });
 
+// THIS ROUTE ADDS A USER TO THE SPECIFIED RACE
+router.post('/participants/:id', (req, res) => {
+    console.log('race participant POST route', req.params.id);
+    const queryString = `INSERT INTO person_race (user_id, race_id) VALUES ($1, $2);`;
+    pool.query(queryString, [req.user.id, req.params.id])
+        .then((PGres) => {
+            console.log(PGres.rows);
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log('error during participant post', err);
+            res.sendStatus(500)
+        })
+})
+
 module.exports = router;

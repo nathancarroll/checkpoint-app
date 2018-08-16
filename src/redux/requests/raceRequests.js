@@ -65,3 +65,14 @@ export function postCheckpoints(raceID, checkpoints){
             return 'error during checkpoint array post: ' + err
         })
 }
+
+export function saveParticipant(raceID){
+    console.log('save participant function called with', raceID);
+    return axios.post(`/api/race/participants/${raceID}`)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return 'error during participant POST: ' + err
+        })
+}

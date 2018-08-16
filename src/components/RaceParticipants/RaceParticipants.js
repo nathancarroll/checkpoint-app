@@ -1,14 +1,25 @@
 import React, {Component} from 'react';
 import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 import {connect} from 'react-redux';
 
 class RaceParticipants extends Component{
     raceID = this.props.match.params.id;
 
     componentDidMount = () => {
-        console.log('hello');
+        this.refreshParticipants();
+    }
+
+    refreshParticipants = () => {
         this.props.dispatch({
-            type: 'FETCH_PARTICIPANTS',
+            type: RACE_ACTIONS.FETCH_PARTICIPANTS,
+            payload: this.raceID
+        })
+    }
+
+    handleJoin = () => {
+        this.props.dispatch({
+            type: RACE_ACTIONS.POST_PARTICIPANT,
             payload: this.raceID
         })
     }
@@ -18,6 +29,7 @@ class RaceParticipants extends Component{
             <div>
                 <RaceDetailsNav raceID={this.raceID} />
                 {JSON.stringify(this.props.participants)}
+                <button onClick={this.handleJoin}>Join Race</button>
             </div>
         )
     }
