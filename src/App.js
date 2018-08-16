@@ -12,7 +12,6 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import RaceCheckpoints from './components/RaceCheckpoints/RaceCheckpoints';
 import RaceParticipants from './components/RaceParticipants/RaceParticipants';
-import NewRaceListView from './components/NewRaceListView/NewRaceListView';
 import CreateRaceContainer from './components/CreateRaceContainer/CreateRaceContainer';
 import RaceDetailsContainer from './components/RaceDetailsContainer/RaceDetailsContainer';
 
@@ -20,7 +19,7 @@ import './styles/main.css';
 
 const App = () => (
   <div>
-    <Header title="Project Base" />
+    <Header title="CHECKPOINT" />
     <Router>
       <Switch>
         <Redirect exact from="/" to="/home" />
@@ -52,10 +51,6 @@ const App = () => (
         <Route
           exact path="/race/racers/:id"
           component={RaceParticipants}
-        />
-        <Route
-          exact path="/race/new/checkpoints/:id"
-          component={NewRaceListView}
         />
         <Route
           exact path="/newrace"
