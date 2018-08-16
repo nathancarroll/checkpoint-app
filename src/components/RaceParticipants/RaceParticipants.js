@@ -24,12 +24,20 @@ class RaceParticipants extends Component{
         })
     }
 
+    handleStart = () => {
+        this.props.dispatch({
+            type: RACE_ACTIONS.START_RACE,
+            payload: this.raceID
+        })
+    }
+
     render(){
         return(
             <div>
                 <RaceDetailsNav raceID={this.raceID} />
                 {JSON.stringify(this.props.participants)}
                 <button onClick={this.handleJoin}>Join Race</button>
+                <button onClick={this.handleStart}>START!</button>
             </div>
         )
     }

@@ -57,12 +57,34 @@ export function postCheckpoint(raceID, checkpointObject){
 
 export function postCheckpoints(raceID, checkpoints){
     console.log('insert checkpoints function called with', raceID, checkpoints);
-    return axios.post(`/api/race/checkpoints/${raceID}`, checkpoints)
+    for (let checkpoint of checkpoints){
+        axios.post(`/api/race/checkpoint/${raceID}`, checkpoint)
+            .then((res) => {
+                console.log('in postCheckpoints',res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            
+    }
+
+    // return axios.post(`/api/race/checkpoints/${raceID}`, checkpoints)
+    //     .then((res) => {
+    //         return res.data
+    //     })
+    //     .catch((err) => {
+    //         return 'error during checkpoint array post: ' + err
+    //     })
+}
+
+export function putStart(raceID){
+    console.log('starting race', raceID);
+    axios.put(`/api/race/start/${raceID}`)
         .then((res) => {
-            return res.data
+            console.log(res);
         })
         .catch((err) => {
-            return 'error during checkpoint array post: ' + err
+            console.log(err);
         })
 }
 

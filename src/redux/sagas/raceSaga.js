@@ -1,6 +1,6 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {RACE_ACTIONS} from "../actions/raceActions";
-import {getRaces, postRace, getCheckpoints, getParticipants, postCheckpoint, postCheckpoints, saveParticipant} from '../requests/raceRequests';
+import {getRaces, postRace, getCheckpoints, getParticipants, postCheckpoint, postCheckpoints, saveParticipant, putStart} from '../requests/raceRequests';
 
 function* fetchRaces(action){
     try {
@@ -16,6 +16,8 @@ function* newRace(action){
     try {
         const raceID = yield postRace(action.payload.name);
         // yield put({type: RACE_ACTIONS.SET_NEW, payload: raceID});
+        console.log('What is racedId?', raceID);
+        console.log('What is our Ation', action);
         yield put({type: RACE_ACTIONS.INSERT_CHECKPOINTS, payload: {
             raceID: raceID,
             checkpoints: action.payload.checkpoints
@@ -80,6 +82,19 @@ function* postParticipant(action){
     }
 }
 
+function* startRace(action){
+    try{
+        yield putStart(action.payload)
+        yield put({
+            type: RACE_ACTIONS.SET_START,
+            payload: action.payload
+        })
+    } catch(err){
+        console.log('error during startRace generator saga', err);
+        yield err
+    }
+}
+
 function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.FETCH_RACES, fetchRaces);
     yield takeLatest(RACE_ACTIONS.POST_RACE, newRace);
@@ -89,6 +104,7 @@ function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.INSERT_CHECKPOINTS, insertCheckpoints);
     yield takeLatest(RACE_ACTIONS.FETCH_DETAILS, fetchDetails);
     yield takeLatest(RACE_ACTIONS.POST_PARTICIPANT, postParticipant);
+    yield takeLatest(RACE_ACTIONS.START_RACE, startRace);
 }
 
 export default raceSaga;
