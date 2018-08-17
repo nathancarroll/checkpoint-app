@@ -72,6 +72,10 @@ function* fetchDetails(action){
         type: USER_ACTIONS.FETCH_USER
     })
     yield put({
+        type: RACE_ACTIONS.SET_ID,
+        payload: action.payload
+    })
+    yield put({
         type: RACE_ACTIONS.FETCH_CHECKPOINTS,
         payload: action.payload
     })

@@ -17,4 +17,5 @@ export const RACE_ACTIONS = {
     SET_START: 'SET_START',
     SET_FINISH: 'SET_FINISH',
     SET_CREATOR: 'SET_CREATOR',
+    SET_ID: 'SET_ID',
 }

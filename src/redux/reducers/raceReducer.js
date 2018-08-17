@@ -33,6 +33,11 @@ const emptyRace = {
 
 const raceDetails = (state=emptyRace, action) => {
     switch (action.type){
+        case RACE_ACTIONS.SET_ID:
+            state = {
+                ...state,
+                raceID: action.payload
+            }
         case RACE_ACTIONS.SET_START:
             state = {
                 ...state,
