@@ -3,13 +3,9 @@ import {connect} from 'react-redux';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
+import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
+
 class RaceDetailsContainer extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            display: 'racers'
-        }
-    }
     componentDidMount = () => {
         console.log('fetching detail for race', this.props.match.params.id);
         this.props.dispatch({
@@ -19,14 +15,11 @@ class RaceDetailsContainer extends Component{
     }
 
     render(){
-        let content;
-        switch (this.state.display){
-            case 'racers':
-                content = JSON.stringify(this.props.race.participants);
-                break;
-        }
         return(
-            <div><h1>hi</h1>{content}</div>
+            <div>
+                <RaceDetailsNav raceID={this.props.match.params.id} />
+                {JSON.stringify(this.props.race.participants)}
+            </div>
         )
     }
 };

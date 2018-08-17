@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {
+    HashRouter as Router,
+    Route,
+    Redirect,
+    Switch,
+    Link
+  } from 'react-router-dom';
 
 import CreateRaceCheckpointList from '../CreateRaceCheckpointList/CreateRaceCheckpointList';
 import CreateRaceMapView from '../CreateRaceMapView/CreateRaceMapView';
