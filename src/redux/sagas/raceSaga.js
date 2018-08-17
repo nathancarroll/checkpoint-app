@@ -1,7 +1,7 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {RACE_ACTIONS} from '../actions/raceActions';
 import {USER_ACTIONS} from '../actions/userActions';
-import {getRaces, postRace, getCheckpoints, getParticipants, postCheckpoint, postCheckpoints, saveParticipant, putStart} from '../requests/raceRequests';
+import {getRaces, postRace, getCheckpoints, getParticipants, postCheckpoint, postCheckpoints, saveParticipant, putStart, getRaceDetails} from '../requests/raceRequests';
 
 function* fetchRaces(action){
     try {
@@ -16,9 +16,6 @@ function* fetchRaces(action){
 function* newRace(action){
     try {
         const raceID = yield postRace(action.payload.name);
-        // yield put({type: RACE_ACTIONS.SET_NEW, payload: raceID});
-        console.log('What is racedId?', raceID);
-        console.log('What is our Ation', action);
         yield put({type: RACE_ACTIONS.INSERT_CHECKPOINTS, payload: {
             raceID: raceID,
             checkpoints: action.payload.checkpoints
@@ -81,6 +78,16 @@ function* fetchDetails(action){
     yield put({
         type: RACE_ACTIONS.FETCH_PARTICIPANTS,
         payload: action.payload
+    })
+    const raceObject = yield getRaceDetails(action.payload);
+    console.log('heres the race object', raceObject);
+    yield put({
+        type: RACE_ACTIONS.SET_CREATOR,
+        payload: raceObject.creator
+    })
+    yield put({
+        type: RACE_ACTIONS.SET_START,
+        payload: raceObject.start_time
     })
     
 }

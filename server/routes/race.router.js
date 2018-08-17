@@ -143,4 +143,18 @@ router.post('/participants/:id', (req, res) => {
         })
 })
 
+router.get('/:id', (req, res) => {
+    console.log('race details GET route', req.params.id);
+    const queryString = `SELECT * FROM race WHERE id = $1;`;
+    pool.query(queryString, [req.params.id])
+        .then((PGres) => {
+            console.log(PGres);
+            res.send(PGres.rows[0])
+        })
+        .catch((err) => {
+            console.log('error during race details GEt', err);
+            res.sendStatus(500);
+        })
+})
+
 module.exports = router;

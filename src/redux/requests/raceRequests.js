@@ -98,3 +98,14 @@ export function saveParticipant(raceID){
             return 'error during participant POST: ' + err
         })
 }
+
+export function getRaceDetails(raceID){
+    console.log('get race details called with', raceID);
+    return axios.get(`/api/race/${raceID}`)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return 'error during race details GET: ' + err
+        })
+}

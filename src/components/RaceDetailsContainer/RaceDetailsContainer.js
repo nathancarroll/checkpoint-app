@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Route, Link} from 'react-router-dom';
+import {Route, Link, Redirect, Switch} from 'react-router-dom';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
@@ -20,8 +20,12 @@ class RaceDetailsContainer extends Component{
         return(
             <div>
                 <RaceDetailsNav raceID={this.props.match.params.id} />
-                <h3><Link to={this.props.match.url + '/what'}>WHAT</Link></h3>
-                <Route path={this.props.match.url + '/what'} render={() => <h1>hello</h1>} />
+                <Switch>
+                    <Redirect exact from={this.props.match.url} to={this.props.match.url + '/participants'} />
+                    <Route exact path={this.props.match.url + '/participants'} component={RaceParticipants} />
+                    <Route exact path={this.props.match.url + '/checkpoints'} render={() => <h1>Checkpoints</h1>} />
+                    <Route exact path={this.props.match.url + '/map'} render={() => <h1>Map</h1>} />
+                </Switch>
             </div>
         )
     }
