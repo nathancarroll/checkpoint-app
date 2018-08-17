@@ -27,17 +27,26 @@ class RaceClock extends Component{
     }
 
     update = () => {
-        const rightNow = moment();
+        const rightNow = moment().format();
+        // this.setState({
+        //     timeElapsed: rightNow
+        // })
+        const duration = moment().diff(this.props.startTime)
         this.setState({
-            timeElapsed: rightNow
+            timeElapsed: duration
         })
-        console.log(rightNow);
-        console.log(this.props.startTime);
+    }
+
+    formatRaceTime = (duration) => {
+        const s = Math.floor( (duration/1000) % 60 );
+        const m = Math.floor( (duration/1000/60) % 60 );
+        const h = Math.floor(duration/(1000*60*60));
+        return `${h}:${m}:${s}`; 
     }
 
     render(){
         return(
-            <h2>{this.state.timeElapsed}</h2>
+            <h2>{this.formatRaceTime(this.state.timeElapsed)}</h2>
         )
     }
 };
