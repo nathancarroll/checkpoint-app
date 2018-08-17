@@ -9,35 +9,30 @@ class RaceClock extends Component{
     constructor(props){
         super(props)
         this.state = {
-            timeElapsed: 0
+            timeElapsed: null
         }
     }
 
     componentDidMount = () => {
         setInterval(this.update, 1000)
-        // this.props.dispatch({
-        //     type: RACE_ACTIONS.FETCH_TIME,
-        //     payload: this.props.raceID
+
+        // console.log(res.data);
+        // console.log(moment(res.data).format('h:mm:ss'));
+        // console.log('time elapsed:');
+        // const duration = moment().diff(moment(res.data), 'hours')
+        // console.log(duration);
+        // this.setState({
+        //     timeElapsed: this.props.startTime
         // })
-        axios.get(`/api/race/time/${this.props.raceID}`)
-            .then((res) => {
-                console.log(res.data);
-                console.log(moment(res.data).format('h:mm:ss'));
-                console.log('time elapsed:');
-                const duration = moment().diff(moment(res.data), 'hours')
-                console.log(duration);
-            })
-            .catch((err) => {
-                console.log('error during axios get', err);
-                return;
-            })
     }
 
     update = () => {
-        const timeElapsed = moment().format('h:mm:ss');
+        const rightNow = moment();
         this.setState({
-            timeElapsed: timeElapsed
+            timeElapsed: rightNow
         })
+        console.log(rightNow);
+        console.log(this.props.startTime);
     }
 
     render(){
@@ -47,4 +42,8 @@ class RaceClock extends Component{
     }
 };
 
-export default connect()(RaceClock);
+const mapStateToProps = (state) => ({
+    startTime: state.race.raceDetails.startTime    
+})
+
+export default connect(mapStateToProps)(RaceClock);

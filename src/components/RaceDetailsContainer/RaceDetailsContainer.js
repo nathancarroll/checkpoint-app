@@ -6,6 +6,8 @@ import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
 import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
 import RaceParticipants from '../RaceParticipants/RaceParticipants';
+import RaceCheckpoints from '../RaceCheckpoints/RaceCheckpoints';
+import RaceClock from '../RaceClock/RaceClock';
 
 class RaceDetailsContainer extends Component{
     componentDidMount = () => {
@@ -20,10 +22,11 @@ class RaceDetailsContainer extends Component{
         return(
             <div>
                 <RaceDetailsNav raceID={this.props.match.params.id} />
+                <RaceClock />
                 <Switch>
                     <Redirect exact from={this.props.match.url} to={this.props.match.url + '/participants'} />
                     <Route exact path={this.props.match.url + '/participants'} component={RaceParticipants} />
-                    <Route exact path={this.props.match.url + '/checkpoints'} render={() => <h1>Checkpoints</h1>} />
+                    <Route exact path={this.props.match.url + '/checkpoints'} component={RaceCheckpoints} />
                     <Route exact path={this.props.match.url + '/map'} render={() => <h1>Map</h1>} />
                 </Switch>
             </div>
@@ -31,6 +34,4 @@ class RaceDetailsContainer extends Component{
     }
 };
 
-const mapStateToProps = (state) => state;
-
-export default connect(mapStateToProps)(RaceDetailsContainer);
+export default connect()(RaceDetailsContainer);
