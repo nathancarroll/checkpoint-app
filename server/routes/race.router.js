@@ -42,7 +42,7 @@ router.put(`/start/:id`, (req, res) => {
     pool.query(queryString, [start_time, req.params.id])
         .then((PGres) => {
             console.log(PGres);
-            res.sendStatus(201);
+            res.send(start_time);
         })
         .catch((err) => {
             console.log(err);
@@ -58,7 +58,7 @@ router.put(`/finish/:id`, (req, res) => {
     pool.query(queryString, [finish_time, req.params.id])
         .then((PGres) => {
             console.log(PGres);
-            res.sendStatus(201);
+            res.send(finish_time);
         })
         .catch((err) => {
             console.log(err);

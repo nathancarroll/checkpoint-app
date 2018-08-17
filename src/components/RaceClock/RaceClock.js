@@ -15,25 +15,17 @@ class RaceClock extends Component{
 
     componentDidMount = () => {
         setInterval(this.update, 1000)
-
-        // console.log(res.data);
-        // console.log(moment(res.data).format('h:mm:ss'));
-        // console.log('time elapsed:');
-        // const duration = moment().diff(moment(res.data), 'hours')
-        // console.log(duration);
-        // this.setState({
-        //     timeElapsed: this.props.startTime
-        // })
     }
 
+    // componentWillUnmount = () => {
+    //     clearInterval(this.clockUpdate)
+    // }
+
     update = () => {
-        const rightNow = moment().format();
-        // this.setState({
-        //     timeElapsed: rightNow
-        // })
-        const duration = moment().diff(this.props.startTime)
+        let duration = moment().diff(this.props.race.startTime)
+        let formattedDuration = this.formatRaceTime(duration)
         this.setState({
-            timeElapsed: duration
+            timeElapsed: formattedDuration
         })
     }
 
@@ -45,12 +37,16 @@ class RaceClock extends Component{
     }
 
     render(){
-        let content = 'FINISHED'
-        if (!this.props.race.finishTime){
-            content = this.formatRaceTime(this.state.timeElapsed)
+        let content;
+        if (!this.props.race.startTime){
+            content = <h2>READY</h2>
+        } else if (!this.props.race.finishTime){
+            content = <h2>{this.state.timeElapsed}</h2>
+        } else {
+            content = <h2>FINISHED</h2>
         }
         return(
-            <h2>{content}</h2>
+            <div>{content}</div>
         )
     }
 };
