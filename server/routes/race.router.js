@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
         })
 })
 
-// THIS ROUTE PUSHES A TIME STAMP FOR THE CURRENT MOMENT INTO THE DATABASE
+// THIS ROUTE PUSHES A TIME STAMP FOR THE CURRENT MOMENT INTO THE START_TIME COLUMN
 router.put(`/start/:id`, (req, res) => {
     console.log('race start put route');
     const queryString = `UPDATE race SET start_time = $1 WHERE id = $2;`;
@@ -48,6 +48,22 @@ router.put(`/start/:id`, (req, res) => {
             console.log(err);
             res.sendStatus(500);
         })
+})
+
+// THIS ROUTE PUSHES A TIME STAMP FOR THE CURRENT MOMENT INTO THE FINISH_TIME COLUMN
+router.put(`/finish/:id`, (req, res) => {
+    console.log('race finish put route');
+    const queryString = `UPDATE race SET finish_time = $1 WHERE id = $2;`;
+    const finish_time = moment().format();
+    pool.query(queryString, [finish_time, req.params.id])
+        .then((PGres) => {
+            console.log(PGres);
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        })  
 })
 
 // THIS ROUTE SHOULD RETURN ALL CHECKPOINTS TO THE RACE CREATOR

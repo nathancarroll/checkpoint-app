@@ -45,14 +45,18 @@ class RaceClock extends Component{
     }
 
     render(){
+        let content = 'FINISHED'
+        if (!this.props.race.finishTime){
+            content = this.formatRaceTime(this.state.timeElapsed)
+        }
         return(
-            <h2>{this.formatRaceTime(this.state.timeElapsed)}</h2>
+            <h2>{content}</h2>
         )
     }
 };
 
 const mapStateToProps = (state) => ({
-    startTime: state.race.raceDetails.startTime    
+    race: state.race.raceDetails    
 })
 
 export default connect(mapStateToProps)(RaceClock);
