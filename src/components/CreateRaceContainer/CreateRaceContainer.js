@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {
-    HashRouter as Router,
-    Route,
-    Redirect,
-    Switch,
-    Link
-  } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import CreateRaceCheckpointList from '../CreateRaceCheckpointList/CreateRaceCheckpointList';
 import CreateRaceMapView from '../CreateRaceMapView/CreateRaceMapView';
@@ -64,13 +58,15 @@ class CreateRaceContainer extends Component{
     render(){
         let content;
         if (this.state.showMap){
-            content = <CreateRaceMapView 
-                            checkpoints={this.state.checkpoints} 
-                            toggle={this.toggleView}
-                            handleCheckpointClick={this.handleCheckpointClick}
-                            handleMapClick={this.handleMapClick}
-                            handleCheckpointSave={this.handleCheckpointSave}
-                            />
+            content = (
+                    <CreateRaceMapView 
+                        checkpoints={this.state.checkpoints} 
+                        toggle={this.toggleView}
+                        handleCheckpointClick={this.handleCheckpointClick}
+                        handleMapClick={this.handleMapClick}
+                        handleCheckpointSave={this.handleCheckpointSave}
+                    />
+            )
         } else {
             content = (
                     <React.Fragment>

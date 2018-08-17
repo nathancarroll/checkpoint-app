@@ -21,7 +21,7 @@ const App = () => (
   <div>
     <Header title="CHECKPOINT" />
     <Router>
-      <Switch>
+        <Switch>
         <Redirect exact from="/" to="/home" />
         <Route
           path="/home"
@@ -57,13 +57,11 @@ const App = () => (
           component={CreateRaceContainer}
         />
         <Route
-          exact path="/racedetails/:id"
+          path="/racedetails/:id"
           component={RaceDetailsContainer}
         />
-        {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
-
-      </Switch>
+        </Switch>
     </Router>
   </div>
 );

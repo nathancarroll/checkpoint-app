@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Route, Link} from 'react-router-dom';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
 import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
+import RaceParticipants from '../RaceParticipants/RaceParticipants';
 
 class RaceDetailsContainer extends Component{
     componentDidMount = () => {
@@ -18,7 +20,8 @@ class RaceDetailsContainer extends Component{
         return(
             <div>
                 <RaceDetailsNav raceID={this.props.match.params.id} />
-                {JSON.stringify(this.props.race.participants)}
+                <h3><Link to={this.props.match.url + '/what'}>WHAT</Link></h3>
+                <Route path={this.props.match.url + '/what'} render={() => <h1>hello</h1>} />
             </div>
         )
     }

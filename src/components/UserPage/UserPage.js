@@ -30,7 +30,7 @@ class UserPage extends Component {
   render() {
     let content = null;
     const raceTableBody = this.props.allRaces.map((race) => {
-      const raceLink = '/race/' + race.id;
+      const raceLink = '/racedetails/' + race.id;
       let status;
       if (race.start_time && race.finish_time){
         status = 'completed';

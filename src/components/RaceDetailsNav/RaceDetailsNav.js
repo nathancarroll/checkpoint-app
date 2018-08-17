@@ -14,7 +14,7 @@ const RaceDetailsNav = (props) => {
                 <li><Link to="/">Back</Link></li>
                 <li><Link to={link.checkpoints}>Checkpoints</Link></li>
                 <li><Link to={link.racers}>Racers</Link></li>
-                <li><Link to={link.map}>Map: {props.raceID}</Link></li> 
+                <li><Link to={link.map}>Map</Link></li> 
             </ul>
         </div>
     )
