@@ -148,6 +148,7 @@ router.post('/participants/:id', (req, res) => {
         })
 })
 
+// THIS ROUTE RETURNS THE RACE DETAILS I.E. START, FINISH, CREATOR
 router.get('/:id', (req, res) => {
     console.log('race details GET route', req.params.id);
     const queryString = `SELECT * FROM race WHERE id = $1;`;
@@ -158,6 +159,23 @@ router.get('/:id', (req, res) => {
         })
         .catch((err) => {
             console.log('error during race details GEt', err);
+            res.sendStatus(500);
+        })
+})
+
+// THIS ROUTE POSTS A TIMESTAMP TO THE GIVEN CHECKPOINT
+router.post('/timestamp/:checkpointId', (req, res) => {
+    console.log('post checkpoint timestamp route. user, checkpoint:', req.user, req.params.checkpointId);
+    const timestamp = moment().format();
+    const queryString = `INSERT INTO person_checkpoint (user_id, checkpoint_id, timestamp)
+                         VALUES ($1, $2, $3);`;
+    pool.query(queryString, [req.user.id, req.params.checkpointId, timestamp])
+        .then((PGres) => {
+            console.log(PGres);
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log('error during checkpoint timestamp POST', err);
             res.sendStatus(500);
         })
 })
