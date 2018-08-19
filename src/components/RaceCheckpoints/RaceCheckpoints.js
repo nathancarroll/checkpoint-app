@@ -1,37 +1,65 @@
 import React, {Component} from 'react';
-import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
 import {connect} from 'react-redux';
 
-import RaceClock from '../RaceClock/RaceClock';
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
+
+const checkpointMargin = 50000 // Currently 50 Km, dont forget to change this back for production!!
 
 class RaceCheckpoints extends Component{
-    raceID = this.props.match.params.id;
+    validateCheckin = () => {
+        const targetCheckpoint = this.props.race.checkpoints[this.props.race.checkpoints.length-1];
+        console.log('targetCheckpoint: ', targetCheckpoint);
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords)
+            const d = this.latLngDiffs(targetCheckpoint.latitude, targetCheckpoint.longitude, position.coords.latitude, position.coords.longitude);
+            if (d < checkpointMargin){
+                alert('you got it dude');
+                this.revealNext(targetCheckpoint.id);
+            } else {
+                alert('come a little closer then you\'ll see')
+            }
+        });
+    }
 
-    componentDidMount = () => {
+    revealNext = (checkpointID) => {
         this.props.dispatch({
-            type: 'FETCH_CHECKPOINTS',
-            payload: this.raceID
+            type: RACE_ACTIONS.TIMESTAMP_CHECKPOINT,
+            payload: {
+                checkpointID: checkpointID,
+                raceID: this.props.race.raceDetails.raceID
+            }
         })
     }
 
-    validateCheckin = () => {
-        navigator.geolocation.getCurrentPosition((position) => console.log(position.coords));
+    // The below function uses the Haversine formula to calculate the great-circle distance between
+    // two points on a sphere given their longitudes and latitudes. 
+    // Credit to user b-h- on StackOverflow.
+
+    latLngDiffs = (lat1, lng1, lat2, lng2) => {
+        const R = 6378.137 // Radius of earth in km
+        const dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+        const dLng = lng2 * Math.PI / 180 - lng1 * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                  Math.cos(lat1 * Math.PI / 180) * 
+                  Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLng/2) * Math.sin(dLng/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        const d = R * c;
+        return d * 1000; // Return the distance between the checkpoints in meters
     }
 
     render(){
         return(
             <div>
-                <RaceDetailsNav raceID={this.raceID} />
-                {JSON.stringify(this.props.checkpoints)}
+                {JSON.stringify(this.props.race.checkpoints)}
                 <button onClick={this.validateCheckin}>Check In</button>
-                <RaceClock raceID={this.raceID}/>
             </div>
         )
     }
 };
 
 const mapStateToProps = (state) => ({
-    checkpoints: state.race.checkpoints
+    race: state.race
 })
 
 export default connect(mapStateToProps)(RaceCheckpoints);

@@ -1,21 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import Nav from '../../components/Nav/Nav';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import {USER_ACTIONS} from '../../redux/actions/userActions';
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
-import { triggerLogout } from '../../redux/actions/loginActions';
-
-import InitNewRace from '../../components/InitNewRace/InitNewRace';
+import {triggerLogout} from '../../redux/actions/loginActions';
 
 import {Link} from 'react-router-dom';
-
-
-const mapStateToProps = state => ({
-  user: state.user,
-  allRaces: state.race.allRaces
-});
 
 class UserPage extends Component {
   componentDidMount() {
@@ -33,11 +23,6 @@ class UserPage extends Component {
     this.props.dispatch(triggerLogout());
   }
 
-  raceDetails = () => {
-    console.log('click');
-
-  }
-
   handleNewRace = () => {
     window.location.href = '/#/newrace'
   }
@@ -45,7 +30,7 @@ class UserPage extends Component {
   render() {
     let content = null;
     const raceTableBody = this.props.allRaces.map((race) => {
-      const raceLink = '/race/' + race.id;
+      const raceLink = '/racedetails/' + race.id;
       let status;
       if (race.start_time && race.finish_time){
         status = 'completed';
@@ -59,7 +44,7 @@ class UserPage extends Component {
           <td>{race.name}</td>
           <td>{race.race_creator}</td>
           <td>{status}</td>
-          <td><Link to={raceLink}>Go To Details</Link></td>
+          <td><Link to={raceLink}>--></Link></td>
         </tr>
       )
     })
@@ -67,17 +52,12 @@ class UserPage extends Component {
     if (this.props.user.userName) {
       content = (
         <div>
-          <h1
-            id="welcome"
-          >
-            Welcome, { this.props.user.userName }!
-          </h1>
-          <p>Your ID is: {this.props.user.id}</p>
           <button
             onClick={this.logout}
           >
             Log Out
           </button>
+          <button onClick={this.handleNewRace}>Create a Race</button>
           <table>
             <thead>
               <tr>
@@ -92,14 +72,16 @@ class UserPage extends Component {
 
     return (
       <div>
-        <Nav />
-        { content }
-        <button onClick={this.handleNewRace}>Create a Race</button>
+        {content}
       </div>
     );
   }
 }
 
-// this allows us to use <App /> in index.js
+const mapStateToProps = state => ({
+  user: state.user,
+  allRaces: state.race.allRaces
+});
+
 export default connect(mapStateToProps)(UserPage);
 

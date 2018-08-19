@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Route, Link, Redirect, Switch} from 'react-router-dom';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
+import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
+import RaceParticipants from '../RaceParticipants/RaceParticipants';
+import RaceCheckpoints from '../RaceCheckpoints/RaceCheckpoints';
+import RaceMap from '../RaceMap/RaceMap';
+import RaceClock from '../RaceClock/RaceClock';
+
 class RaceDetailsContainer extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            display: 'racers'
-        }
-    }
     componentDidMount = () => {
         console.log('fetching detail for race', this.props.match.params.id);
         this.props.dispatch({
@@ -19,18 +20,19 @@ class RaceDetailsContainer extends Component{
     }
 
     render(){
-        let content;
-        switch (this.state.display){
-            case 'racers':
-                content = JSON.stringify(this.props.race.participants);
-                break;
-        }
         return(
-            <div><h1>hi</h1>{content}</div>
+            <div>
+                <RaceDetailsNav raceID={this.props.match.params.id} />
+                <RaceClock />
+                <Switch>
+                    <Redirect exact from={this.props.match.url} to={this.props.match.url + '/participants'} />
+                    <Route exact path={this.props.match.url + '/participants'} component={RaceParticipants} />
+                    <Route exact path={this.props.match.url + '/checkpoints'} component={RaceCheckpoints} />
+                    <Route exact path={this.props.match.url + '/map'} component={RaceMap} />
+                </Switch>
+            </div>
         )
     }
 };
 
-const mapStateToProps = (state) => state;
-
-export default connect(mapStateToProps)(RaceDetailsContainer);
+export default connect()(RaceDetailsContainer);

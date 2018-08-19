@@ -4,6 +4,8 @@ const moment = require('moment');
 
 const router = express.Router();
 
+
+// THIS ROUTE GETS ALL RACES
 router.get('/', (req, res) => {
     const queryString = `SELECT race.id, name, start_time, person.username AS "race_creator" 
                         FROM race JOIN person ON race.creator = person.id;`;
@@ -32,7 +34,7 @@ router.post('/', (req, res) => {
         })
 })
 
-// THIS ROUTE PUSHES A TIME STAMP FOR THE CURRENT MOMENT INTO THE DATABASE
+// THIS ROUTE PUSHES A TIME STAMP FOR THE CURRENT MOMENT INTO THE START_TIME COLUMN
 router.put(`/start/:id`, (req, res) => {
     console.log('race start put route');
     const queryString = `UPDATE race SET start_time = $1 WHERE id = $2;`;
@@ -40,12 +42,28 @@ router.put(`/start/:id`, (req, res) => {
     pool.query(queryString, [start_time, req.params.id])
         .then((PGres) => {
             console.log(PGres);
-            res.sendStatus(201);
+            res.send(start_time);
         })
         .catch((err) => {
             console.log(err);
             res.sendStatus(500);
         })
+})
+
+// THIS ROUTE PUSHES A TIME STAMP FOR THE CURRENT MOMENT INTO THE FINISH_TIME COLUMN
+router.put(`/finish/:id`, (req, res) => {
+    console.log('race finish put route');
+    const queryString = `UPDATE race SET finish_time = $1 WHERE id = $2;`;
+    const finish_time = moment().format();
+    pool.query(queryString, [finish_time, req.params.id])
+        .then((PGres) => {
+            console.log(PGres);
+            res.send(finish_time);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        })  
 })
 
 // THIS ROUTE SHOULD RETURN ALL CHECKPOINTS TO THE RACE CREATOR
@@ -102,31 +120,7 @@ router.get('/participants/:id', (req, res) => {
         })
 })
 
-// THIS ROUTE ACCEPTS AN ARRAY OF CHECKPOINTS TO BE ADDED TO THE RACE WITH QUERIED ID
-// router.post('/checkpoints/:id', (req, res) => {
-//     console.log('race checkpoint multiple POST route', req.params.id);
-//     let e = false;
-//     for (checkpoint of req.body){
-//         console.log(checkpoint);
-//         const queryString = `INSERT INTO checkpoint (latitude, longitude, name, description, race_id)
-//                              VALUES ($1, $2, $3, $4, $5);`;
-//         pool.query(queryString, [checkpoint.lat, checkpoint.lng, checkpoint.name, checkpoint.description, req.params.id])
-//             .then((PGres) => {
-//                 console.log(PGres);
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//                 e = true;
-//             })
-//     }
-
-//     if (e) {
-//         res.sendStatus(500);
-//     } else {
-//         res.sendStatus(201);
-//     }
-// })
-
+// THIS ROUTE INSERTS THE CHECKPOINTS ONE AT A TIME
 router.post('/checkpoint/:id', (req, res) => {
     const queryString = `INSERT INTO checkpoint (latitude, longitude, name, description, race_id)
                              VALUES ($1, $2, $3, $4, $5);`;
@@ -138,17 +132,6 @@ router.post('/checkpoint/:id', (req, res) => {
                 console.log(err);
             })
 })
-
-// THIS ROUTE RETURNS THE START TIME OF A GIVEN RACE
-router.get('/time/:id', (req, res) => {
-    console.log('race time GET route', req.params.id);
-    const queryString = `SELECT start_time FROM race WHERE id = $1;`;
-    pool.query(queryString, [req.params.id])
-        .then((PGres) => {
-            console.log(PGres.rows);
-            res.send(PGres.rows[0].start_time)
-        })
-});
 
 // THIS ROUTE ADDS A USER TO THE SPECIFIED RACE
 router.post('/participants/:id', (req, res) => {
@@ -162,6 +145,38 @@ router.post('/participants/:id', (req, res) => {
         .catch((err) => {
             console.log('error during participant post', err);
             res.sendStatus(500)
+        })
+})
+
+// THIS ROUTE RETURNS THE RACE DETAILS I.E. START, FINISH, CREATOR
+router.get('/:id', (req, res) => {
+    console.log('race details GET route', req.params.id);
+    const queryString = `SELECT * FROM race WHERE id = $1;`;
+    pool.query(queryString, [req.params.id])
+        .then((PGres) => {
+            console.log(PGres);
+            res.send(PGres.rows[0])
+        })
+        .catch((err) => {
+            console.log('error during race details GEt', err);
+            res.sendStatus(500);
+        })
+})
+
+// THIS ROUTE POSTS A TIMESTAMP TO THE GIVEN CHECKPOINT
+router.post('/timestamp/:checkpointId', (req, res) => {
+    console.log('post checkpoint timestamp route. user, checkpoint:', req.user, req.params.checkpointId);
+    const timestamp = moment().format();
+    const queryString = `INSERT INTO person_checkpoint (user_id, checkpoint_id, timestamp)
+                         VALUES ($1, $2, $3);`;
+    pool.query(queryString, [req.user.id, req.params.checkpointId, timestamp])
+        .then((PGres) => {
+            console.log(PGres);
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log('error during checkpoint timestamp POST', err);
+            res.sendStatus(500);
         })
 })
 

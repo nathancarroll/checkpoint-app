@@ -1,50 +1,57 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import axios from 'axios';
 
-import {RACE_ACTIONS} from '../../redux/actions/raceActions';
+let clockInterval;
 
 class RaceClock extends Component{
     constructor(props){
         super(props)
         this.state = {
-            timeElapsed: 0
+            timeElapsed: null
         }
     }
 
     componentDidMount = () => {
-        setInterval(this.update, 1000)
-        // this.props.dispatch({
-        //     type: RACE_ACTIONS.FETCH_TIME,
-        //     payload: this.props.raceID
-        // })
-        axios.get(`/api/race/time/${this.props.raceID}`)
-            .then((res) => {
-                console.log(res.data);
-                console.log(moment(res.data).format('h:mm:ss'));
-                console.log('time elapsed:');
-                const duration = moment().diff(moment(res.data), 'hours')
-                console.log(duration);
-            })
-            .catch((err) => {
-                console.log('error during axios get', err);
-                return;
-            })
+        clockInterval = setInterval(this.update, 1000)
+    }
+
+    componentWillUnmount = () => {
+        clearInterval(clockInterval)
     }
 
     update = () => {
-        const timeElapsed = moment().format('h:mm:ss');
+        let duration = moment().diff(this.props.race.startTime)
+        let formattedDuration = this.formatRaceTime(duration)
         this.setState({
-            timeElapsed: timeElapsed
+            timeElapsed: formattedDuration
         })
     }
 
+    formatRaceTime = (duration) => {
+        const s = Math.floor( (duration/1000) % 60 );
+        const m = Math.floor( (duration/1000/60) % 60 );
+        const h = Math.floor(duration/(1000*60*60));
+        return `${h}:${m}:${s}`; 
+    }
+
     render(){
+        let content;
+        if (!this.props.race.startTime){
+            content = <h2>READY</h2>
+        } else if (!this.props.race.finishTime){
+            content = <h2>{this.state.timeElapsed}</h2>
+        } else {
+            content = <h2>FINISHED</h2>
+        }
         return(
-            <h2>{this.state.timeElapsed}</h2>
+            <div>{content}</div>
         )
     }
 };
 
-export default connect()(RaceClock);
+const mapStateToProps = (state) => ({
+    race: state.race.raceDetails    
+})
+
+export default connect(mapStateToProps)(RaceClock);

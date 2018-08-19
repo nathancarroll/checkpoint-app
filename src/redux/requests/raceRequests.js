@@ -88,6 +88,17 @@ export function putStart(raceID){
         })
 }
 
+export function putFinish(raceID){
+    console.log('finishing race', raceID);
+    axios.put(`/api/race/finish/${raceID}`)
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
 export function saveParticipant(raceID){
     console.log('save participant function called with', raceID);
     return axios.post(`/api/race/participants/${raceID}`)
@@ -96,5 +107,27 @@ export function saveParticipant(raceID){
         })
         .catch((err) => {
             return 'error during participant POST: ' + err
+        })
+}
+
+export function getRaceDetails(raceID){
+    console.log('get race details called with', raceID);
+    return axios.get(`/api/race/${raceID}`)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return 'error during race details GET: ' + err
+        })
+}
+
+export function postTimestamp(checkpointID){
+    console.log('post timestamp fubnction called with ', checkpointID);
+    return axios.post(`/api/race/timestamp/${checkpointID}`)
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            return 'error during timestamp post: ' + err
         })
 }

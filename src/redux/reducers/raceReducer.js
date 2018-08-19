@@ -9,22 +9,6 @@ const allRaces = (state=[], action) => {
     return state;
 }
 
-// const newRace = (state=null, action) => {
-//     switch (action.type){
-//         case RACE_ACTIONS.SET_NEW:
-//             state = action.payload;
-//     }
-//     return state;
-// }
-
-// const activeRace = (state=null, action) => {
-//     switch (action.type){
-//         case RACE_ACTIONS.SET_ACTIVE_RACE:
-//             state = action.payload;
-//     }
-//     return state;
-// }
-
 const checkpoints = (state=null, action) => {
     switch (action.type){
         case RACE_ACTIONS.SET_CHECKPOINTS:
@@ -41,20 +25,45 @@ const participants = (state=null, action) => {
     return state;
 }
 
-const startTime = (state=null, action) => {
+const emptyRace = {
+    startTime: null,
+    finishTime: null,
+    creator: null,
+}
+
+const raceDetails = (state=emptyRace, action) => {
     switch (action.type){
+        case RACE_ACTIONS.SET_ID:
+            state = {
+                ...state,
+                raceID: action.payload
+            }
         case RACE_ACTIONS.SET_START:
-            state = action.payload
+            state = {
+                ...state,
+                startTime: action.payload
+            }
+            break;
+        case RACE_ACTIONS.SET_FINISH:
+            state = {
+                ...state,
+                finishTime: action.payload
+            }
+            break;
+        case RACE_ACTIONS.SET_CREATOR:
+            state = {
+                ...state,
+                creator: action.payload
+            }
+            break;
     }
     return state;
 }
 
 export default combineReducers({
     allRaces,
-    // newRace,
-    // activeRace,
     checkpoints,
     participants,
-    startTime
+    raceDetails,
 })
 
