@@ -7,6 +7,7 @@ import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
 import RaceParticipants from '../RaceParticipants/RaceParticipants';
 import RaceCheckpoints from '../RaceCheckpoints/RaceCheckpoints';
+import RaceMap from '../RaceMap/RaceMap';
 import RaceClock from '../RaceClock/RaceClock';
 
 class RaceDetailsContainer extends Component{
@@ -27,7 +28,7 @@ class RaceDetailsContainer extends Component{
                     <Redirect exact from={this.props.match.url} to={this.props.match.url + '/participants'} />
                     <Route exact path={this.props.match.url + '/participants'} component={RaceParticipants} />
                     <Route exact path={this.props.match.url + '/checkpoints'} component={RaceCheckpoints} />
-                    <Route exact path={this.props.match.url + '/map'} render={() => <h1>Map</h1>} />
+                    <Route exact path={this.props.match.url + '/map'} component={RaceMap} />
                 </Switch>
             </div>
         )

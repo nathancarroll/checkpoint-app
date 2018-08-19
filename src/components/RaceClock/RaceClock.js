@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
+let clockInterval;
+
 class RaceClock extends Component{
     constructor(props){
         super(props)
@@ -14,12 +16,12 @@ class RaceClock extends Component{
     }
 
     componentDidMount = () => {
-        setInterval(this.update, 1000)
+        clockInterval = setInterval(this.update, 1000)
     }
 
-    // componentWillUnmount = () => {
-    //     clearInterval(this.clockUpdate)
-    // }
+    componentWillUnmount = () => {
+        clearInterval(clockInterval)
+    }
 
     update = () => {
         let duration = moment().diff(this.props.race.startTime)
