@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
+
 class RaceCheckpoints extends Component{
     validateCheckin = () => {
         const targetCheckpoint = this.props.race.checkpoints[this.props.race.checkpoints.length-1];
@@ -8,17 +10,23 @@ class RaceCheckpoints extends Component{
         navigator.geolocation.getCurrentPosition((position) => {
             console.log(position.coords)
             const d = this.latLngDiffs(targetCheckpoint.latitude, targetCheckpoint.longitude, position.coords.latitude, position.coords.longitude);
-            if (d < 50){
+            if (d < 50000){
                 alert('you got it dude');
-                this.revealNext();
+                this.revealNext(targetCheckpoint.id);
             } else {
                 alert('come a little closer then you\'ll see')
             }
         });
     }
 
-    revealNext = () => {
-        
+    revealNext = (checkpointID) => {
+        this.props.dispatch({
+            type: RACE_ACTIONS.TIMESTAMP_CHECKPOINT,
+            payload: {
+                checkpointID: checkpointID,
+                raceID: this.props.race.raceDetails.raceID
+            }
+        })
     }
 
     // The below function uses the Haversine formula to calculate the great-circle distance between

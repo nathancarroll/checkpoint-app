@@ -120,3 +120,14 @@ export function getRaceDetails(raceID){
             return 'error during race details GET: ' + err
         })
 }
+
+export function postTimestamp(checkpointID){
+    console.log('post timestamp fubnction called with ', checkpointID);
+    return axios.post(`/api/race/timestamp/${checkpointID}`)
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            return 'error during timestamp post: ' + err
+        })
+}

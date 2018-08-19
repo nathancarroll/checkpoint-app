@@ -1,7 +1,17 @@
 import {put, takeLatest} from 'redux-saga/effects';
 import {RACE_ACTIONS} from '../actions/raceActions';
 import {USER_ACTIONS} from '../actions/userActions';
-import {getRaces, postRace, getCheckpoints, getParticipants, postCheckpoint, postCheckpoints, saveParticipant, putStart, getRaceDetails, putFinish} from '../requests/raceRequests';
+import {getRaces, 
+        postRace, 
+        getCheckpoints, 
+        getParticipants, 
+        postCheckpoint, 
+        postCheckpoints, 
+        saveParticipant, 
+        putStart, 
+        getRaceDetails, 
+        putFinish,
+        postTimestamp} from '../requests/raceRequests';
 
 function* fetchRaces(action){
     try {
@@ -138,6 +148,19 @@ function* finishRace(action){
     }
 }
 
+function* timestampCheckpoint(action){
+    try{
+        yield postTimestamp(action.payload.checkpointID);
+        yield put({
+            type: RACE_ACTIONS.FETCH_CHECKPOINTS,
+            payload: action.payload.raceID
+        })
+    } catch(err){
+        console.log('error during post timestamp generator saga');
+        yield err
+    }
+}
+
 function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.FETCH_RACES, fetchRaces);
     yield takeLatest(RACE_ACTIONS.POST_RACE, newRace);
@@ -149,6 +172,7 @@ function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.POST_PARTICIPANT, postParticipant);
     yield takeLatest(RACE_ACTIONS.START_RACE, startRace);
     yield takeLatest(RACE_ACTIONS.FINISH_RACE, finishRace);
+    yield takeLatest(RACE_ACTIONS.TIMESTAMP_CHECKPOINT, timestampCheckpoint);
 }
 
 export default raceSaga;
