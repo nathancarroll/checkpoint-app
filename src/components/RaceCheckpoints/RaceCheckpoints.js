@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
+const checkpointMargin = 50000 // Currently 50 Km, dont forget to change this back for production!!
+
 class RaceCheckpoints extends Component{
     validateCheckin = () => {
         const targetCheckpoint = this.props.race.checkpoints[this.props.race.checkpoints.length-1];
@@ -10,7 +12,7 @@ class RaceCheckpoints extends Component{
         navigator.geolocation.getCurrentPosition((position) => {
             console.log(position.coords)
             const d = this.latLngDiffs(targetCheckpoint.latitude, targetCheckpoint.longitude, position.coords.latitude, position.coords.longitude);
-            if (d < 50000){
+            if (d < checkpointMargin){
                 alert('you got it dude');
                 this.revealNext(targetCheckpoint.id);
             } else {
