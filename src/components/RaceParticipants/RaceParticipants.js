@@ -29,9 +29,9 @@ class RaceParticipants extends Component{
         if (this.props.race.participants){
             allParticipants = this.props.race.participants.map((participant) => {
                 return(
-                    <ListItem button>
+                    <ListItem key={participant.id}>
                         <ListItemIcon>
-                            <MaterialIcon icon="person" />
+                            <MaterialIcon icon="person" size="medium"/>
                         </ListItemIcon>
                         <ListItemText primary={participant.username} />
                     </ListItem>

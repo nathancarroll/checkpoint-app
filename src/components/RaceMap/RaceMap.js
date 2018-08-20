@@ -8,15 +8,17 @@ let allCheckpoints;
 
 class RaceMap extends Component{
     render(){
-        // console.log(this.props.checkpoints);
-        const allCheckpoints = this.props.checkpoints.map(checkpoint => {
-            return(
-                <MapCheckpoint key={checkpoint.index} lat={checkpoint.latitude} lng={checkpoint.longitude} />
-            )
-        }) || null;
+        let allCheckpoints = [];
+        if (this.props.checkpoints){
+            allCheckpoints = this.props.checkpoints.map(checkpoint => {
+                return(
+                    <MapCheckpoint key={checkpoint.id} lat={checkpoint.latitude} lng={checkpoint.longitude} />
+                )
+            });
+        }
+
         return(
             <div style={{ height: '100vh', width: '100%' }}> 
-            {JSON.stringify(this.props.checkpoints)}
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
                 defaultCenter={{lat: 44.978185, lng: -93.081808}}
