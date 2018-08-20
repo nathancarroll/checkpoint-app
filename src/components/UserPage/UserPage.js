@@ -49,9 +49,9 @@ class UserPage extends Component {
         return(
             <ListItem onClick={() => window.location.href = raceLink} button key={race.id}>
               <ListItemIcon>
-                <MaterialIcon icon="arrow_forward" size="large" />
+                <MaterialIcon icon="directions_bike" size="medium" />
               </ListItemIcon>
-              <ListItemText primary={race.name} secondary={status} />
+              <ListItemText primary={race.name} secondary={'Created by: ' + race.race_creator + ' Status: ' + status} />
             </ListItem>
         )
       })
