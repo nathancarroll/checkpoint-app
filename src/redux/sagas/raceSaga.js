@@ -123,10 +123,10 @@ function* postParticipant(action){
 
 function* startRace(action){
     try{
-        yield putStart(action.payload)
+        const startTime = yield putStart(action.payload)
         yield put({
             type: RACE_ACTIONS.SET_START,
-            payload: action.payload
+            payload: startTime
         })
     } catch(err){
         console.log('error during startRace generator saga', err);

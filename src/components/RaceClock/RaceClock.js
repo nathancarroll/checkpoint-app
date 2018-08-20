@@ -29,9 +29,17 @@ class RaceClock extends Component{
     }
 
     formatRaceTime = (duration) => {
-        const s = Math.floor( (duration/1000) % 60 );
-        const m = Math.floor( (duration/1000/60) % 60 );
-        const h = Math.floor(duration/(1000*60*60));
+        let s = Math.floor( (duration/1000) % 60 );
+        let m = Math.floor( (duration/1000/60) % 60 );
+        let h = Math.floor(duration/(1000*60*60));
+        s = s.toString();
+        m = m.toString();
+        if (s.length === 1){
+            s = '0' + s;
+        }
+        if (m.length === 1){
+            m = '0' + m;
+        }
         return `${h}:${m}:${s}`; 
     }
 

@@ -11,7 +11,7 @@ class RaceMap extends Component{
         // console.log(this.props.checkpoints);
         const allCheckpoints = this.props.checkpoints.map(checkpoint => {
             return(
-                <MapCheckpoint lat={checkpoint.latitude} lng={checkpoint.longitude} />
+                <MapCheckpoint key={checkpoint.index} lat={checkpoint.latitude} lng={checkpoint.longitude} />
             )
         }) || null;
         return(
@@ -23,8 +23,7 @@ class RaceMap extends Component{
                 defaultZoom={14}
                 options={{gestureHandling: 'greedy'}}
             >
-                {/* {allCheckpoints} */}
-                {this.props.checkpoints.map((checkpoint) => <MapCheckpoint lat={checkpoint.latitude} lng={checkpoint.longitude} key={checkpoint.id} />)}
+                {allCheckpoints}
             </GoogleMapReact>
         </div>
         )

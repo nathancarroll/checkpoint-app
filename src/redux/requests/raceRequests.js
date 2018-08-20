@@ -79,23 +79,27 @@ export function postCheckpoints(raceID, checkpoints){
 
 export function putStart(raceID){
     console.log('starting race', raceID);
-    axios.put(`/api/race/start/${raceID}`)
+    return axios.put(`/api/race/start/${raceID}`)
         .then((res) => {
             console.log(res);
+            return res.data;
         })
         .catch((err) => {
             console.log(err);
+            return err
         })
 }
 
 export function putFinish(raceID){
     console.log('finishing race', raceID);
-    axios.put(`/api/race/finish/${raceID}`)
+    return axios.put(`/api/race/finish/${raceID}`)
         .then((res) => {
             console.log(res);
+            return res.data;
         })
         .catch((err) => {
             console.log(err);
+            return err;
         })
 }
 
