@@ -9,11 +9,11 @@ let allCheckpoints;
 class RaceMap extends Component{
     render(){
         // console.log(this.props.checkpoints);
-        // const allCheckpoints = this.props.checkpoints.map(checkpoint => {
-        //     return(
-        //         <MapCheckpoint lat={checkpoint.latitude} lng={checkpoint.longitude} />
-        //     )
-        // })
+        const allCheckpoints = this.props.checkpoints.map(checkpoint => {
+            return(
+                <MapCheckpoint lat={checkpoint.latitude} lng={checkpoint.longitude} />
+            )
+        }) || null;
         return(
             <div style={{ height: '100vh', width: '100%' }}> 
             {JSON.stringify(this.props.checkpoints)}
@@ -24,7 +24,7 @@ class RaceMap extends Component{
                 options={{gestureHandling: 'greedy'}}
             >
                 {/* {allCheckpoints} */}
-                {/* {this.props.checkpoints.map((checkpoint) => <MapCheckpoint lat={checkpoint.latitude} lng={checkpoint.longitude} key={checkpoint.id} />)} */}
+                {this.props.checkpoints.map((checkpoint) => <MapCheckpoint lat={checkpoint.latitude} lng={checkpoint.longitude} key={checkpoint.id} />)}
             </GoogleMapReact>
         </div>
         )

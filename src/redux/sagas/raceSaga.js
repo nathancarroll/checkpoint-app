@@ -94,7 +94,6 @@ function* fetchDetails(action){
         payload: action.payload
     })
     const raceObject = yield getRaceDetails(action.payload);
-    console.log('heres the race object', raceObject);
     yield put({
         type: RACE_ACTIONS.SET_CREATOR,
         payload: raceObject.creator

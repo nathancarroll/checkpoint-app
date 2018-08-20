@@ -164,6 +164,7 @@ router.get('/:id', (req, res) => {
 })
 
 // THIS ROUTE POSTS A TIMESTAMP TO THE GIVEN CHECKPOINT
+// ALSO THE LOGIC TO CHECK FOR RACE OR PARTICIPANT FINISH IS IN HERE
 router.post('/timestamp/:checkpointId', (req, res) => {
     console.log('post checkpoint timestamp route. user, checkpoint:', req.user, req.params.checkpointId);
     const timestamp = moment().format();
@@ -179,5 +180,9 @@ router.post('/timestamp/:checkpointId', (req, res) => {
             res.sendStatus(500);
         })
 })
+
+const checkForWinners = (raceID, participantID=false) => {
+    
+}
 
 module.exports = router;
