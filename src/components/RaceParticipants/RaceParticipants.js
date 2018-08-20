@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import RaceDetailsNav from '../RaceDetailsNav/RaceDetailsNav';
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 import {connect} from 'react-redux';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MaterialIcon from 'material-icons-react';
 
 class RaceParticipants extends Component{
 
@@ -20,9 +25,23 @@ class RaceParticipants extends Component{
     }
 
     render(){
+        let allParticipants = [];
+        if (this.props.race.participants){
+            allParticipants = this.props.race.participants.map((participant) => {
+                return(
+                    <ListItem button>
+                        <ListItemIcon>
+                            <MaterialIcon icon="person" />
+                        </ListItemIcon>
+                        <ListItemText primary={participant.username} />
+                    </ListItem>
+                )
+            })
+        }
+
         return(
             <div>
-                {JSON.stringify(this.props.race.participants)}
+                <List>{allParticipants}</List>
                 <button onClick={this.handleJoin}>Join Race</button>
                 <button onClick={this.handleStart}>START!</button>
             </div>
