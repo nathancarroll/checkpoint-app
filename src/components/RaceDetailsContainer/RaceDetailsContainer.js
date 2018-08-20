@@ -10,6 +10,8 @@ import RaceCheckpoints from '../RaceCheckpoints/RaceCheckpoints';
 import RaceMap from '../RaceMap/RaceMap';
 import RaceClock from '../RaceClock/RaceClock';
 
+import SimpleBottomNavigation from '../BottomNav/BottomNav';
+
 class RaceDetailsContainer extends Component{
     componentDidMount = () => {
         console.log('fetching detail for race', this.props.match.params.id);
@@ -22,6 +24,7 @@ class RaceDetailsContainer extends Component{
     render(){
         return(
             <div>
+                <SimpleBottomNavigation raceID={this.props.match.params.id} />
                 <RaceDetailsNav raceID={this.props.match.params.id} />
                 <RaceClock />
                 <Switch>
