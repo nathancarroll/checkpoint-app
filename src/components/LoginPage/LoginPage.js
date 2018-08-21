@@ -68,14 +68,13 @@ class LoginPage extends Component {
     return (
       <div>
         { this.renderAlert() }
+        <h1 style={{color: 'white'}}>CHECKPOINT</h1>
         <form onSubmit={this.login}>
-          <h1 style={{color: 'white'}}>Checkpoint</h1>
           <div>
-            <label htmlFor="username">
-              Username:
               <TextField
                 type="text"
                 name="username"
+                labe="Username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
                 InputProps={{
@@ -86,14 +85,12 @@ class LoginPage extends Component {
                   ),
                 }}
               />
-            </label>
           </div>
           <div>
-            <label htmlFor="password">
-              Password:
               <TextField
                 type="password"
                 name="password"
+                label="Password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
                 InputProps={{
@@ -104,7 +101,6 @@ class LoginPage extends Component {
                   ),
                 }}
               />
-            </label>
           </div>
           <div>
             <input
@@ -112,7 +108,7 @@ class LoginPage extends Component {
               name="submit"
               value="Log In"
             />
-            <Button><Link to="/register">Register</Link></Button>
+            <Button variant="contained" color="white"><Link to="/register">Register</Link></Button>
           </div>
         </form>
       </div>

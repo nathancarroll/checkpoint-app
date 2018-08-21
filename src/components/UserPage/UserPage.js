@@ -48,7 +48,7 @@ class UserPage extends Component {
           status = 'registering';
         }
         return(
-            <ListItem onClick={() => window.location.href = raceLink} button key={race.id}>
+            <ListItem className="listItem" onClick={() => window.location.href = raceLink} button key={race.id}>
               <ListItemIcon>
                 <MaterialIcon icon="directions_bike" size="medium" />
               </ListItemIcon>
