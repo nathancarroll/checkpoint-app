@@ -76,7 +76,6 @@ class CreateRaceMapView extends Component{
             )
         })
         return(
-            <ListItem>
             <div style={{ height: '100vh', width: '100%' }}> 
                 <Button 
                     variant='fab'
@@ -105,7 +104,6 @@ class CreateRaceMapView extends Component{
                     />
                 </GoogleMapReact>
             </div>
-            </ListItem>
         )
     }
 };

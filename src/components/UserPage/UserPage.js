@@ -9,6 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@material-ui/core/Paper';
 import MaterialIcon from 'material-icons-react';
 import Button from '@material-ui/core/Button';
 
@@ -48,22 +49,30 @@ class UserPage extends Component {
           status = 'registering';
         }
         return(
+          <Paper elevation={2}>
             <ListItem className="listItem" onClick={() => window.location.href = raceLink} key={race.id}>
               <ListItemIcon>
                 <MaterialIcon icon="directions_bike" size="medium" />
               </ListItemIcon>
               <ListItemText primary={race.name} secondary={'Created by: ' + race.race_creator + ' Status: ' + status} />
             </ListItem>
+          </Paper>
         )
       })
     }
 
     return (
       <div>
-          <Header title="Checkpoint" />
-          <Button onClick={this.logout}>Log Out</Button>
-          <Button onClick={this.handleNewRace}>Create a Race</Button>
-          <List>{raceList}</List>
+          <Header title="CHECKPOINT" />
+          <List>
+            <Paper elevation={10}>
+            <ListItem onClick={this.handleNewRace} className="list-button">MAKE A NEW RACE</ListItem>
+            </Paper>
+            {raceList}
+            <Paper elevation={10}>
+            <ListItem onClick={this.logout} className="list-button">LOGOUT</ListItem>
+            </Paper>
+          </List>
       </div>
     );
   }

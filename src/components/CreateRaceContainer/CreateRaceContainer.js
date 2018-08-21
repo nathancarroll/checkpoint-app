@@ -79,7 +79,7 @@ class CreateRaceContainer extends Component{
             )
         }
         return(
-            <div>{content}</div>
+            <React.Fragment>{content}</React.Fragment>
         )
     }
 };

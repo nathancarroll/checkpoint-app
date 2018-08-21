@@ -66,31 +66,26 @@ class RaceClock extends Component{
     }
 
     render(){
-        let content;
+        let output;
         let joined = false;
         for (let racer in this.props.racers){
-            console.log(this.props.racers[racer]);
             if (this.props.racers[racer].id === this.props.user.id ){
                 joined = true;
             } 
         }
         if (!this.props.race.startTime){
             if (this.props.race.creator === this.props.user.id){
-                content = <p>START</p>
+                output = <div onClick={this.handleStart}>START</div>
             } else {
-                if (joined){
-                    content = <p>LEAVE</p>
-                } else {
-                    content = <p>JOIN</p>
-                }
+                output = <div onClick={() => this.handleJoin(joined)}>{joined ? 'LEAVE' : 'JOIN'}</div>
             }
         } else if (!this.props.race.finishTime){
-            content = <h1>{this.state.timeElapsed}</h1>
+            output = <h1>{this.state.timeElapsed}</h1>
         } else {
-            content = <h2>FINISHED</h2>
+            output = <h2>FINISHED</h2>
         }
         return(
-            <div onClick={() => this.handleJoin(joined)}>{content}</div>
+            <React.Fragment>{output}</React.Fragment>
         )
     }
 };

@@ -18,7 +18,7 @@ class RaceMap extends Component{
         }
 
         return(
-            <div style={{ height: '100vh', width: '100%' }}> 
+            <div className="map-container" style={{ height: '70vh', width: '95vw'}}> 
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
                 defaultCenter={{lat: 44.978185, lng: -93.081808}}
