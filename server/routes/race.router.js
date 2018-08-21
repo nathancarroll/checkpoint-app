@@ -148,6 +148,21 @@ router.post('/participants/:id', (req, res) => {
         })
 })
 
+// THIS ROUTE REMOVES A USER FROM THE SPECIFIED RACE
+router.delete('/participants/:id', (req, res) => {
+    console.log('participant DELETE route', req.params.id);
+    const queryString = `DELETE FROM person_race WHERE user_id = $1 AND race_id = $2;`;
+    pool.query(queryString, [req.user.id, req.params.id])
+        .then((PGres) => {
+            console.log(PGres.rows);
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('error during participant DFELETE', err);
+            res.sendStatus(500);
+        })
+})
+
 // THIS ROUTE RETURNS THE RACE DETAILS I.E. START, FINISH, CREATOR
 router.get('/:id', (req, res) => {
     console.log('race details GET route', req.params.id);

@@ -6,6 +6,8 @@ import MaterialIcon from 'material-icons-react';
 import MapCheckpoint from '../MapCheckpoint/MapCheckpoint';
 import NewCheckpointModal from '../NewCheckpointModal/NewCheckpointModal';
 
+import {ListItem} from '@material-ui/core';
+
 import '../NewRaceMap/NewRaceMap.css';
 
 class CreateRaceMapView extends Component{
@@ -74,6 +76,7 @@ class CreateRaceMapView extends Component{
             )
         })
         return(
+            <ListItem>
             <div style={{ height: '100vh', width: '100%' }}> 
                 <Button 
                     variant='fab'
@@ -102,6 +105,7 @@ class CreateRaceMapView extends Component{
                     />
                 </GoogleMapReact>
             </div>
+            </ListItem>
         )
     }
 };

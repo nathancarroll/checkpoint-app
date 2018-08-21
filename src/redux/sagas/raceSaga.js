@@ -11,7 +11,8 @@ import {getRaces,
         putStart, 
         getRaceDetails, 
         putFinish,
-        postTimestamp} from '../requests/raceRequests';
+        postTimestamp,
+        databaseDeleteParticipant} from '../requests/raceRequests';
 
 function* fetchRaces(action){
     try {
@@ -156,7 +157,20 @@ function* timestampCheckpoint(action){
         })
     } catch(err){
         console.log('error during post timestamp generator saga');
-        yield err
+        yield err;
+    }
+}
+
+function* deleteParticipant(action){
+    try{
+        yield databaseDeleteParticipant(action.payload);
+        yield put({
+            type: RACE_ACTIONS.FETCH_PARTICIPANTS,
+            payload: action.payload
+        })
+    } catch(err){
+        console.log('error during delete participant generator saga');
+        yield err;
     }
 }
 
@@ -172,6 +186,7 @@ function* raceSaga(){
     yield takeLatest(RACE_ACTIONS.START_RACE, startRace);
     yield takeLatest(RACE_ACTIONS.FINISH_RACE, finishRace);
     yield takeLatest(RACE_ACTIONS.TIMESTAMP_CHECKPOINT, timestampCheckpoint);
+    yield takeLatest(RACE_ACTIONS.DELETE_PARTICIPANT, deleteParticipant);
 }
 
 export default raceSaga;
