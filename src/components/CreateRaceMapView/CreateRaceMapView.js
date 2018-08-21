@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
+import {Button} from '@material-ui/core';
+import MaterialIcon from 'material-icons-react';
 
 import MapCheckpoint from '../MapCheckpoint/MapCheckpoint';
 import NewCheckpointModal from '../NewCheckpointModal/NewCheckpointModal';
@@ -16,7 +18,7 @@ class CreateRaceMapView extends Component{
             coords: {
                 lat: null,
                 lng: null
-            }
+            },
         }
         this.modalAction = false
     }
@@ -27,23 +29,9 @@ class CreateRaceMapView extends Component{
         })
     }
 
-    // this insane workaround is to make sure that click events on the modal dont also trigger the 
-    // mapclick handler to initialize another modal
     handleMapClick = (e) => {
-        console.log('handleMapClick');
-        if (this.modalAction){
-            this.setState({
-                showModal: false,
-                checkpointName: '',
-                checkpointDescription: '',
-                coords: {
-                    lat: null,
-                    lng: null
-                }
-            })
-            this.modalAction = false;
-            return;
-        }
+        if (this.state.showModal) return;
+        console.log('handleMapClick:', e);
         this.setState({
             showModal: true,
             coords: {
@@ -55,9 +43,8 @@ class CreateRaceMapView extends Component{
 
     handleModalClick = (e) => {
         console.log('handleModalClick');
-        e.stopPropagation();
-        if (e.target.name === 'cancel'){
-        } else if (e.target.name === 'save'){
+
+        if (e.target.name === 'save'){
             const newCheckpoint = {
                 lat: this.state.coords.lat,
                 lng: this.state.coords.lng,
@@ -66,7 +53,15 @@ class CreateRaceMapView extends Component{
             }
             this.props.handleCheckpointSave(newCheckpoint)
         }
-        this.modalAction = true;
+        this.setState({
+            showModal: false,
+            checkpointName: '',
+            checkpointDescription: '',
+            coords: {
+                lat: null,
+                lng: null
+            }
+        })
     }
 
     render(){
@@ -80,11 +75,17 @@ class CreateRaceMapView extends Component{
         })
         return(
             <div style={{ height: '100vh', width: '100%' }}> 
-                <button onClick={this.props.toggle}>Back</button>
+                <Button 
+                    variant='fab'
+                    style={{position: 'absolute', zIndex: 10, margin: '5px', backgroundColor: 'white'}}
+                    onClick={this.props.toggle}
+                >
+                    <MaterialIcon icon="arrow_back" />
+                </Button>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
-                    defaultCenter={{lat: 44.978185, lng: -93.081808}}
-                    defaultZoom={14}
+                    defaultCenter={{lat: 44.977769, lng: -93.154999}}
+                    defaultZoom={13}
                     onChildClick={this.props.handleCheckpointClick}
                     onClick={this.handleMapClick}
                     options={{gestureHandling: 'greedy'}}
@@ -95,6 +96,9 @@ class CreateRaceMapView extends Component{
                         showModal={this.state.showModal}
                         handleModalChange={this.handleModalChange}
                         handleModalClick={this.handleModalClick}
+                        checkpointName={this.state.checkpointName}
+                        checkpointDescription={this.state.checkpointDescription}
+                        {...this.state.coords}
                     />
                 </GoogleMapReact>
             </div>

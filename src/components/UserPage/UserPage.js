@@ -10,8 +10,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MaterialIcon from 'material-icons-react';
+import Button from '@material-ui/core/Button';
 
-import {Link} from 'react-router-dom';
+import Header from '../Header/Header';
 
 class UserPage extends Component {
   componentDidMount() {
@@ -72,8 +73,9 @@ class UserPage extends Component {
 
     return (
       <div>
-          <button onClick={this.logout}>Log Out</button>
-          <button onClick={this.handleNewRace}>Create a Race</button>
+          <Header title="Checkpoint" />
+          <Button onClick={this.logout}>Log Out</Button>
+          <Button onClick={this.handleNewRace}>Create a Race</Button>
           <List>{raceList}</List>
       </div>
     );

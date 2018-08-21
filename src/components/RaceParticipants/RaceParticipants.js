@@ -33,7 +33,7 @@ class RaceParticipants extends Component{
                         <ListItemIcon>
                             <MaterialIcon icon="person" size="medium"/>
                         </ListItemIcon>
-                        <ListItemText primary={participant.username} />
+                        <ListItemText primary={participant.username} secondary={null}/>
                     </ListItem>
                 )
             })
