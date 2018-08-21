@@ -48,7 +48,7 @@ class UserPage extends Component {
           status = 'registering';
         }
         return(
-            <ListItem className="listItem" onClick={() => window.location.href = raceLink} button key={race.id}>
+            <ListItem className="listItem" onClick={() => window.location.href = raceLink} key={race.id}>
               <ListItemIcon>
                 <MaterialIcon icon="directions_bike" size="medium" />
               </ListItemIcon>
@@ -57,19 +57,6 @@ class UserPage extends Component {
         )
       })
     }
-
-    // const raceTableBody = this.props.allRaces.map((race) => {
-    //   const raceLink = '/racedetails/' + race.id;
-
-    //   return(
-    //     <tr key={race.id}>
-    //       <td>{race.name}</td>
-    //       <td>{race.race_creator}</td>
-    //       <td>{status}</td>
-    //       <td><Link to={raceLink}>--></Link></td>
-    //     </tr>
-    //   )
-    // })
 
     return (
       <div>

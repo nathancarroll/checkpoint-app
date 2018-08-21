@@ -66,12 +66,15 @@ input[type="submit"] {
 
 ul {
     list-style-type: none;
+    display: inline-block;
+    width: 95%;
 }
 
 li, .listItem {
-    width: 80%;
-    background-color: white;
-    border: solid black 1px;
+    width: 100%;
+    display: inline-block;
+    background-color: rgb(251, 252, 253);
+    /* border: solid black 1px; */
     margin: 10px;
     border-radius: 4px;
     padding: 10px;
@@ -90,4 +93,12 @@ li a {
 li a:hover {
     text-decoration: underline;
     color: #eee;
+}
+
+TextField {
+    margin: 20px;
+}
+
+BottomNav {
+    backgroundColor: rgb(221, 236, 250);
 }

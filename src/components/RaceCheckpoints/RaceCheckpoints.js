@@ -70,8 +70,10 @@ class RaceCheckpoints extends Component{
         }
         return(
             <div>
-                <button onClick={this.validateCheckin}>Check In</button>
-                <List>{allCheckpoints}</List>
+                <ListItem>
+                    <button onClick={this.validateCheckin}>Check In</button>
+                </ListItem>
+                {allCheckpoints}
             </div>
         )
     }

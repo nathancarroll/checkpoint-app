@@ -53,7 +53,7 @@ class RaceClock extends Component{
             content = <h2>FINISHED</h2>
         }
         return(
-            <div>{content}</div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>{content}</div>
         )
     }
 };

@@ -74,7 +74,6 @@ class LoginPage extends Component {
               <TextField
                 type="text"
                 name="username"
-                labe="Username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
                 InputProps={{
@@ -90,13 +89,12 @@ class LoginPage extends Component {
               <TextField
                 type="password"
                 name="password"
-                label="Password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <MaterialIcon icon="account_box" />
+                      <MaterialIcon icon="vpn_key" />
                     </InputAdornment>
                   ),
                 }}

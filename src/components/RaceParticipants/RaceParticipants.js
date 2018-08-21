@@ -41,7 +41,7 @@ class RaceParticipants extends Component{
 
         return(
             <div>
-                <List>{allParticipants}</List>
+                {allParticipants}
                 <button onClick={this.handleJoin}>Join Race</button>
                 <button onClick={this.handleStart}>START!</button>
             </div>
