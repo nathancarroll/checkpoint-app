@@ -44,9 +44,7 @@ class CreateRaceMapView extends Component{
     }
 
     handleModalClick = (e) => {
-        console.log('handleModalClick');
-
-        if (e.target.name === 'save'){
+        if (e.target.textContent === 'Save'){
             const newCheckpoint = {
                 lat: this.state.coords.lat,
                 lng: this.state.coords.lng,
