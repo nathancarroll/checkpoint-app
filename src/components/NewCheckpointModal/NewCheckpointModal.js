@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {TextField, Button} from '@material-ui/core';
 
 class NewCheckpointModal extends Component{
-    myAlert = (e) => {
-        console.log('fire');
-        console.log(e.target);
+    focusMe = (e) => {
+        e.target.focus();
     }
 
     render(){
@@ -13,20 +12,19 @@ class NewCheckpointModal extends Component{
                 <div className={showHideClassName}>
                 <div className="modal-main">
                         <TextField
-                            onClick={this.myAlert}
+                            onClick={this.focusMe}
                             className="modal-input"
                             label="Name"
                             value={this.props.checkpointName} 
                             name="checkpointName" 
-                            // placeholder="name" 
                             onChange={this.props.handleModalChange}
                         />
                         <TextField 
+                            onClick={this.focusMe}
                             className="modal-input"
                             label="Description"
                             value={this.props.checkpointDescription} 
                             name="checkpointDescription" 
-                            // placeholder="description" 
                             onChange={this.props.handleModalChange}
                         />
                     <Button name="cancel" onClick={this.props.handleModalClick}>Cancel</Button>
