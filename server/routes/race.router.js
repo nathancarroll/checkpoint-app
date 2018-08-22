@@ -194,13 +194,15 @@ router.post('/timestamp/:checkpointId', (req, res) => {
             // if that = 0, update DOM for all users
             console.log(PGres);
             checkForWinners(req.params.checkpointId, req.user.id, timestamp)
-                .then(() => {
+                .then((winners) => {
                     console.log('all is well');
+                    console.log(winners);
+                    res.send(winners);
                 })
                 .catch((err) => {
                     console.log('error during the async business', err);
+                    res.sendStatus(500);
                 })
-            res.sendStatus(201);
         })
         .catch((err) => {
             console.log('error during checkpoint timestamp POST', err);
@@ -209,6 +211,11 @@ router.post('/timestamp/:checkpointId', (req, res) => {
 })
 
 async function checkForWinners(checkpointID, racerID, timestamp){
+    let results = {
+        userFinished: false,
+        raceFinished: false
+    }
+
     const queryGetRaceID = `SELECT race_id FROM checkpoint WHERE id = $1;`;
     let raceID = await pool.query(queryGetRaceID, [checkpointID]).then((PGres) => {
         return PGres.rows[0].race_id;
@@ -229,8 +236,10 @@ async function checkForWinners(checkpointID, racerID, timestamp){
     }).catch((err) => console.log(err));
     console.log('number of checkpoints reached:', numberOfCheckpointsReached);
 
-    if (true){
+    // THIS CONDITIONAL WILL NEVER FIRE WITHOUT THE TYPE CHANGING
+    if (Number(numberOfCheckpointsReached) >= Number(numberOfCheckpoints)){
         console.log('user has completed the race');
+        results.userFinished = true;
         const queryPutFinish = `UPDATE person_race SET time = $1 WHERE user_id = $2 AND race_id = $3;`;
         let putResult = await pool.query(queryPutFinish, [timestamp, racerID, raceID]).then((PGres) => {
             return PGres;
@@ -244,8 +253,16 @@ async function checkForWinners(checkpointID, racerID, timestamp){
         }).catch((err) => console.log(err));
         if (notFinished == 0){
             console.log('THE RACE IS OVER');
+
+            const queryPutFinish = `UPDATE race SET finish_time = $1 WHERE id = $2;`;
+            let putFinishResult = pool.query(queryPutFinish, [timestamp, raceID]).then((PGres) => {
+                console.log('put finish time', PGres);
+                results.raceFinished = true
+            }).catch((err) => console.log(err));
         }
     }
+
+    return results
 }
 
 module.exports = router;
