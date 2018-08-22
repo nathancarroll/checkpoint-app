@@ -187,7 +187,19 @@ router.post('/timestamp/:checkpointId', (req, res) => {
                          VALUES ($1, $2, $3);`;
     pool.query(queryString, [req.user.id, req.params.checkpointId, timestamp])
         .then((PGres) => {
+            // get number of checkpoints reached by this user
+            // get number of checkpoints in this race
+            // if user has reached all, PUT a finish time and update DOM for user
+            // get number of non-null finish times
+            // if that = 0, update DOM for all users
             console.log(PGres);
+            checkForWinners(req.params.checkpointId, req.user.id, timestamp)
+                .then(() => {
+                    console.log('all is well');
+                })
+                .catch((err) => {
+                    console.log('error during the async business', err);
+                })
             res.sendStatus(201);
         })
         .catch((err) => {
@@ -196,8 +208,44 @@ router.post('/timestamp/:checkpointId', (req, res) => {
         })
 })
 
-const checkForWinners = (raceID, participantID=false) => {
-    
+async function checkForWinners(checkpointID, racerID, timestamp){
+    const queryGetRaceID = `SELECT race_id FROM checkpoint WHERE id = $1;`;
+    let raceID = await pool.query(queryGetRaceID, [checkpointID]).then((PGres) => {
+        return PGres.rows[0].race_id;
+    }).catch((err) => console.log(err));
+    console.log('raceID:', raceID);
+
+    const queryNumberOfCheckpoints = `SELECT COUNT(*) FROM checkpoint WHERE race_id = $1;`;
+    let numberOfCheckpoints = await pool.query(queryNumberOfCheckpoints, [raceID]).then((PGres) => {
+        return PGres.rows[0].count;
+    }).catch((err) => console.log(err));
+    console.log('number of checkpoints:', numberOfCheckpoints);
+
+    const queryNumberOfCheckpointsReached = `SELECT COUNT(*) FROM person_checkpoint JOIN checkpoint 
+                                             ON person_checkpoint.checkpoint_id = checkpoint.id 
+                                             WHERE person_checkpoint.user_id = $1 AND checkpoint.race_id = $2;`;
+    let numberOfCheckpointsReached = await pool.query(queryNumberOfCheckpointsReached, [racerID, raceID]).then((PGres) => {
+        return PGres.rows[0].count;
+    }).catch((err) => console.log(err));
+    console.log('number of checkpoints reached:', numberOfCheckpointsReached);
+
+    if (true){
+        console.log('user has completed the race');
+        const queryPutFinish = `UPDATE person_race SET time = $1 WHERE user_id = $2 AND race_id = $3;`;
+        let putResult = await pool.query(queryPutFinish, [timestamp, racerID, raceID]).then((PGres) => {
+            return PGres;
+        }).catch((err) => console.log(err));
+        console.log('put result:', putResult);
+
+        const queryNotFinished = `SELECT COUNT(*) FROM person_race WHERE race_id = $1 AND time IS NULL;`;
+        let notFinished = await pool.query(queryNotFinished, [raceID]).then((PGres) => {
+            console.log('not finished:', PGres.rows[0].count);
+            return PGres.rows[0].count;
+        }).catch((err) => console.log(err));
+        if (notFinished == 0){
+            console.log('THE RACE IS OVER');
+        }
+    }
 }
 
 module.exports = router;
