@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { triggerLogin, formError, clearError } from '../../redux/actions/loginActions';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
+import {TextField, Button, InputAdornment} from '@material-ui/core';
+import MaterialIcon from 'material-icons-react';
+
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -65,29 +68,37 @@ class LoginPage extends Component {
     return (
       <div>
         { this.renderAlert() }
+        <h1 style={{color: 'white'}}>CHECKPOINT</h1>
         <form onSubmit={this.login}>
-          <h1>Login</h1>
           <div>
-            <label htmlFor="username">
-              Username:
-              <input
+              <TextField
                 type="text"
                 name="username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MaterialIcon icon="account_box" />
+                    </InputAdornment>
+                  ),
+                }}
               />
-            </label>
           </div>
           <div>
-            <label htmlFor="password">
-              Password:
-              <input
+              <TextField
                 type="password"
                 name="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MaterialIcon icon="vpn_key" />
+                    </InputAdornment>
+                  ),
+                }}
               />
-            </label>
           </div>
           <div>
             <input
@@ -95,7 +106,7 @@ class LoginPage extends Component {
               name="submit"
               value="Log In"
             />
-            <Link to="/register">Register</Link>
+            <Button variant="contained" color="white"><Link to="/register">Register</Link></Button>
           </div>
         </form>
       </div>

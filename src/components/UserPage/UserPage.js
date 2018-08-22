@@ -5,7 +5,15 @@ import {USER_ACTIONS} from '../../redux/actions/userActions';
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 import {triggerLogout} from '../../redux/actions/loginActions';
 
-import {Link} from 'react-router-dom';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@material-ui/core/Paper';
+import MaterialIcon from 'material-icons-react';
+import Button from '@material-ui/core/Button';
+
+import Header from '../Header/Header';
 
 class UserPage extends Component {
   componentDidMount() {
@@ -28,51 +36,43 @@ class UserPage extends Component {
   }
 
   render() {
-    let content = null;
-    const raceTableBody = this.props.allRaces.map((race) => {
-      const raceLink = '/racedetails/' + race.id;
-      let status;
-      if (race.start_time && race.finish_time){
-        status = 'completed';
-      } else if (race.start_time){
-        status = 'in progress';
-      } else {
-        status = 'registering';
-      }
-      return(
-        <tr key={race.id}>
-          <td>{race.name}</td>
-          <td>{race.race_creator}</td>
-          <td>{status}</td>
-          <td><Link to={raceLink}>--></Link></td>
-        </tr>
-      )
-    })
-
-    if (this.props.user.userName) {
-      content = (
-        <div>
-          <button
-            onClick={this.logout}
-          >
-            Log Out
-          </button>
-          <button onClick={this.handleNewRace}>Create a Race</button>
-          <table>
-            <thead>
-              <tr>
-                <th>Race</th><th>Creator</th><th>Status</th><th>Details</th>
-              </tr>
-            </thead>
-            <tbody>{raceTableBody}</tbody>
-          </table>
-        </div>
-      );
+    let raceList = [];
+    if (this.props.allRaces){
+      raceList = this.props.allRaces.map(race => {
+        let raceLink = '/#/racedetails/' + race.id;
+        let status;
+        if (race.start_time && race.finish_time){
+          status = 'completed';
+        } else if (race.start_time){
+          status = 'in progress';
+        } else {
+          status = 'registering';
+        }
+        return(
+          <Paper elevation={2}>
+            <ListItem className="listItem" onClick={() => window.location.href = raceLink} key={race.id}>
+              <ListItemIcon>
+                <MaterialIcon icon="directions_bike" size="medium" />
+              </ListItemIcon>
+              <ListItemText primary={race.name} secondary={'Created by: ' + race.race_creator + ' Status: ' + status} />
+            </ListItem>
+          </Paper>
+        )
+      })
     }
 
     return (
       <div>
-        {content}
+          <Header title="CHECKPOINT" />
+          <List>
+            <Paper elevation={10}>
+            <ListItem onClick={this.handleNewRace} className="list-button">MAKE A NEW RACE</ListItem>
+            </Paper>
+            {raceList}
+            <Paper elevation={10}>
+            <ListItem onClick={this.logout} className="list-button">LOGOUT</ListItem>
+            </Paper>
+          </List>
       </div>
     );
   }

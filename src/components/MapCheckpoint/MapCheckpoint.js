@@ -1,9 +1,10 @@
 import React from 'react';
+import MaterialIcon, {colorPalette} from 'material-icons-react';
 
 const MapCheckpoint = () => {
     return(
         <React.Fragment>
-            <h3>MARKER</h3>
+            <MaterialIcon icon="place" color={colorPalette.red._600}/>
         </React.Fragment>
     )
 }

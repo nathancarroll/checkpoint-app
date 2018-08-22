@@ -135,3 +135,14 @@ export function postTimestamp(checkpointID){
             return 'error during timestamp post: ' + err
         })
 }
+
+export function databaseDeleteParticipant(raceID){
+    console.log('delete participant function called with ', raceID);
+    return axios.delete(`/api/race/participants/${raceID}`)
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            return 'error during participant DELETE: ' + err
+        })
+}

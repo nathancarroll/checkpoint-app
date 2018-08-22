@@ -1,5 +1,10 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('./bike.jpg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .instructions h1 {
@@ -8,18 +13,25 @@ body {
 }
 
 .instructions {
-    background-color: #00acb0;
+    background-color: rgba(26, 24, 24, 0.815);
     padding: 5px;
     color: #ece7e7;
+    border-radius: 4px;
 }
 
-form {
+/* form {
     background-color: #dbd5d5;
     width: 30%;
     height: 250px;
     margin: 20px auto;
     padding: 25px;
     border-radius: 2px;
+} */
+
+form {
+    background-color: white;
+    width: 50%;
+    height: auto;
 }
 
 input {
@@ -55,13 +67,18 @@ input[type="submit"] {
 
 ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+    display: inline-block;
+    width: 96%;
 }
 
-li {
-    float: left;
+li, .listItem {
+    width: 100%;
+    display: inline-block;
+    background-color: rgb(251, 252, 253);
+    /* border: solid black 2px; */
+    margin: 10px;
+    border-radius: 4px;
+    padding: 10px;
 }
 
 li a {
@@ -78,3 +95,13 @@ li a:hover {
     text-decoration: underline;
     color: #eee;
 }
+
+TextField {
+    margin: 20px;
+}
+
+.list-button {
+    /* border: solid red 2px; */
+    border-radius: 4px;
+}
+

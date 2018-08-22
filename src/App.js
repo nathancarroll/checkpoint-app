@@ -19,7 +19,6 @@ import './styles/main.css';
 
 const App = () => (
   <div>
-    <Header title="CHECKPOINT" />
     <Router>
         <Switch>
         <Redirect exact from="/" to="/home" />

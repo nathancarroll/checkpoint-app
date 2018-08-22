@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
 
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 let clockInterval;
 
 class RaceClock extends Component{
     constructor(props){
         super(props)
         this.state = {
-            timeElapsed: null
+            timeElapsed: null,
         }
     }
 
@@ -18,6 +19,27 @@ class RaceClock extends Component{
 
     componentWillUnmount = () => {
         clearInterval(clockInterval)
+    }
+
+    handleJoin = (joined) => {
+        if (!joined){
+            this.props.dispatch({
+                type: RACE_ACTIONS.POST_PARTICIPANT,
+                payload: this.props.race.raceID
+            })
+        } else {
+            this.props.dispatch({
+                type: RACE_ACTIONS.DELETE_PARTICIPANT,
+                payload: this.props.race.raceID
+            })
+        }
+    }
+
+    handleStart = () => {
+        this.props.dispatch({
+            type: RACE_ACTIONS.START_RACE,
+            payload: this.props.race.raceID
+        })
     }
 
     update = () => {
@@ -44,22 +66,34 @@ class RaceClock extends Component{
     }
 
     render(){
-        let content;
+        let output;
+        let joined = false;
+        for (let racer in this.props.racers){
+            if (this.props.racers[racer].id === this.props.user.id ){
+                joined = true;
+            } 
+        }
         if (!this.props.race.startTime){
-            content = <h2>READY</h2>
+            if (this.props.race.creator === this.props.user.id){
+                output = <div onClick={this.handleStart}>START</div>
+            } else {
+                output = <div onClick={() => this.handleJoin(joined)}>{joined ? 'LEAVE' : 'JOIN'}</div>
+            }
         } else if (!this.props.race.finishTime){
-            content = <h2>{this.state.timeElapsed}</h2>
+            output = <h1>{this.state.timeElapsed}</h1>
         } else {
-            content = <h2>FINISHED</h2>
+            output = <h2>FINISHED</h2>
         }
         return(
-            <div>{content}</div>
+            <React.Fragment>{output}</React.Fragment>
         )
     }
 };
 
 const mapStateToProps = (state) => ({
-    race: state.race.raceDetails    
+    race: state.race.raceDetails,
+    user: state.user,
+    racers: state.race.participants,
 })
 
 export default connect(mapStateToProps)(RaceClock);
