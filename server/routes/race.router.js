@@ -106,7 +106,7 @@ router.get('/checkpoints/:id', (req, res) => {
 // THIS ROUTE SHOULD ALWAYS RETURN EVERY PARTICIPANT REGARDLESS OF WHO IS MAKING THE REQUEST
 router.get('/participants/:id', (req, res) => {
     console.log('race participants GET route', req.params.id);
-    const queryString = `SELECT person.id, person.username 
+    const queryString = `SELECT person.id, person.username, person_race.time 
                         FROM race JOIN person_race ON race.id = person_race.race_id 
                         JOIN person ON person_race.user_id = person.id 
                         WHERE race.id = $1;`
