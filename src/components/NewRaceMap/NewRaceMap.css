@@ -18,6 +18,10 @@
     border-radius: 4px;
     padding: 10px;
   }
+
+  .modal-input {
+    z-index: 15;
+  }
   
   .display-block {
     display: block;
