@@ -32,13 +32,36 @@ class CreateRaceMapView extends Component{
     }
 
     handleMapClick = (e) => {
+        // Dont do anything with extra map clicks while the new checkpoint modal is open
         if (this.state.showModal) return;
-        console.log('handleMapClick:', e);
+        // Also don't do anything if the target of the click is a checkpoint
+        if (e.event.target.tagName === 'I'){
+            console.log('handling checkpoint click');
+            console.log(e.event);
+            return;
+        };
+
         this.setState({
             showModal: true,
             coords: {
                 lat: e.lat,
                 lng: e.lng,
+            }
+        })
+    }
+
+    handleCheckpointClick = (e) => {
+        // The event here is the index of the array of the map's children
+        console.log('handleCheckpointClick');
+        console.log(e);
+        let checkpointToEdit = this.props.checkpoints[e];
+        this.setState({
+            showModal: true,
+            checkpointName: checkpointToEdit.name,
+            checkpointDescription: checkpointToEdit.description,
+            coords: {
+                lat: checkpointToEdit.lat,
+                lng: checkpointToEdit.lng
             }
         })
     }
@@ -86,7 +109,7 @@ class CreateRaceMapView extends Component{
                     bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
                     defaultCenter={{lat: 44.977055, lng: -93.265884}}
                     defaultZoom={13}
-                    onChildClick={this.props.handleCheckpointClick}
+                    onChildClick={this.handleCheckpointClick}
                     onClick={this.handleMapClick}
                     options={{gestureHandling: 'greedy'}}
                 >

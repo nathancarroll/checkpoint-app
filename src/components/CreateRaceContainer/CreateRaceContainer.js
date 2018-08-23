@@ -23,10 +23,6 @@ class CreateRaceContainer extends Component {
         })
     }
 
-    handleCheckpointClick = (e) => {
-        console.log('handle checkpoint click');
-    }
-
     handleCheckpointSave = (newCheckpoint) => {
         console.log(newCheckpoint);
         this.setState({
@@ -63,7 +59,6 @@ class CreateRaceContainer extends Component {
                 <CreateRaceMapView
                     checkpoints={this.state.checkpoints}
                     toggle={this.toggleView}
-                    handleCheckpointClick={this.handleCheckpointClick}
                     handleMapClick={this.handleMapClick}
                     handleCheckpointSave={this.handleCheckpointSave}
                 />
@@ -71,11 +66,6 @@ class CreateRaceContainer extends Component {
         } else {
             content = (
                 <List>
-                    <Paper elevation={10}>
-                        <ListItem onClick={this.toggleView}>
-                            <ListItemText primary="Add more checkpoints" />
-                        </ListItem>
-                    </Paper>
                     {/* <button onClick={this.toggleView}>Add more checkpoints</button> */}
                     <Paper elevation={10}>
                     <ListItem>
@@ -84,6 +74,11 @@ class CreateRaceContainer extends Component {
                     </ListItem>
                     </Paper>
                     <CreateRaceCheckpointList checkpoints={this.state.checkpoints} />
+                    <Paper elevation={10}>
+                        <ListItem onClick={this.toggleView}>
+                            <ListItemText primary="Add more checkpoints" />
+                        </ListItem>
+                    </Paper>
                     <Paper elevation={10}>
                         <ListItem>
                             <Link to="/#/user">Cancel</Link>
