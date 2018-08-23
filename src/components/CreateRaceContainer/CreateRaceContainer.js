@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { List, ListItem, ListItemText, Paper } from '@material-ui/core';
 
 import CreateRaceCheckpointList from '../CreateRaceCheckpointList/CreateRaceCheckpointList';
 import CreateRaceMapView from '../CreateRaceMapView/CreateRaceMapView';
-import {RACE_ACTIONS} from '../../redux/actions/raceActions';
+import { RACE_ACTIONS } from '../../redux/actions/raceActions';
 
-class CreateRaceContainer extends Component{
-    constructor(props){
+class CreateRaceContainer extends Component {
+    constructor(props) {
         super(props)
         this.state = {
             showMap: true,
@@ -15,7 +16,7 @@ class CreateRaceContainer extends Component{
             raceName: ''
         }
     }
-    
+
     handleNameChange = (e) => {
         this.setState({
             raceName: e.target.value
@@ -55,30 +56,43 @@ class CreateRaceContainer extends Component{
         })
     }
 
-    render(){
+    render() {
         let content;
-        if (this.state.showMap){
+        if (this.state.showMap) {
             content = (
-                    <CreateRaceMapView 
-                        checkpoints={this.state.checkpoints} 
-                        toggle={this.toggleView}
-                        handleCheckpointClick={this.handleCheckpointClick}
-                        handleMapClick={this.handleMapClick}
-                        handleCheckpointSave={this.handleCheckpointSave}
-                    />
+                <CreateRaceMapView
+                    checkpoints={this.state.checkpoints}
+                    toggle={this.toggleView}
+                    handleCheckpointClick={this.handleCheckpointClick}
+                    handleMapClick={this.handleMapClick}
+                    handleCheckpointSave={this.handleCheckpointSave}
+                />
             )
         } else {
             content = (
-                    <React.Fragment>
-                    <Link to="/#/user">Cancel</Link>
-                    <button onClick={this.toggleView}>Add more checkpoints</button>
+                <List>
+                    <Paper elevation={10}>
+                        <ListItem onClick={this.toggleView}>
+                            <ListItemText primary="Add more checkpoints" />
+                        </ListItem>
+                    </Paper>
+                    {/* <button onClick={this.toggleView}>Add more checkpoints</button> */}
+                    <Paper elevation={10}>
+                    <ListItem>
                     <input onChange={this.handleNameChange} placeholder="name your race" value={this.state.raceName} />
                     <button onClick={this.submitRace}>Submit Race</button>
+                    </ListItem>
+                    </Paper>
                     <CreateRaceCheckpointList checkpoints={this.state.checkpoints} />
-                    </React.Fragment>
+                    <Paper elevation={10}>
+                        <ListItem>
+                            <Link to="/#/user">Cancel</Link>
+                        </ListItem>
+                    </Paper>
+                </List>
             )
         }
-        return(
+        return (
             <React.Fragment>{content}</React.Fragment>
         )
     }

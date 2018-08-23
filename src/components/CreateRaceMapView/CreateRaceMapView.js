@@ -84,7 +84,7 @@ class CreateRaceMapView extends Component{
                 </Button>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
-                    defaultCenter={{lat: 44.977769, lng: -93.154999}}
+                    defaultCenter={{lat: 44.977055, lng: -93.265884}}
                     defaultZoom={13}
                     onChildClick={this.props.handleCheckpointClick}
                     onClick={this.handleMapClick}
