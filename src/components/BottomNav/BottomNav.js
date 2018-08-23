@@ -5,8 +5,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
 import MaterialIcon from 'material-icons-react';
 
-import {Link} from 'react-router-dom';
-
 const styles = {
   root: {
     width: '100%',

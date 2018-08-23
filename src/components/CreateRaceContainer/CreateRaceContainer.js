@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { List, ListItem, ListItemText, Paper } from '@material-ui/core';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {List, ListItem, ListItemText, Paper} from '@material-ui/core';
 
 import CreateRaceCheckpointList from '../CreateRaceCheckpointList/CreateRaceCheckpointList';
 import CreateRaceMapView from '../CreateRaceMapView/CreateRaceMapView';
-import { RACE_ACTIONS } from '../../redux/actions/raceActions';
+import {RACE_ACTIONS} from '../../redux/actions/raceActions';
 
 class CreateRaceContainer extends Component {
     constructor(props) {
@@ -27,6 +27,13 @@ class CreateRaceContainer extends Component {
         console.log(newCheckpoint);
         this.setState({
             checkpoints: [...this.state.checkpoints, newCheckpoint]
+        })
+    }
+
+    handleCheckpointEdit = (editedCheckpoint, indexToEdit) => {
+        console.log('we are editing', editedCheckpoint);
+        this.setState({
+            checkpoints: [editedCheckpoint]
         })
     }
 
@@ -61,6 +68,7 @@ class CreateRaceContainer extends Component {
                     toggle={this.toggleView}
                     handleMapClick={this.handleMapClick}
                     handleCheckpointSave={this.handleCheckpointSave}
+                    handleCheckpointEdit={this.handleCheckpointEdit}
                 />
             )
         } else {

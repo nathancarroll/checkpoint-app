@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {List, ListItem, ListItemIcon, ListItemText, Paper} from '@material-ui/core';
+import {ListItem, ListItemIcon, ListItemText, Paper} from '@material-ui/core';
 import MaterialIcon from 'material-icons-react';
 
 class CreateRaceCheckpointList extends Component {
