@@ -58,7 +58,7 @@ class CreateRaceMapView extends Component{
         let checkpointToEdit = this.props.checkpoints[e];
         this.setState({
             showModal: true,
-            editing: true,
+            editing: e,
             checkpointName: checkpointToEdit.name,
             checkpointDescription: checkpointToEdit.description,
             coords: {
@@ -78,13 +78,14 @@ class CreateRaceMapView extends Component{
             }
             if (this.state.editing){
                 console.log('were editing now');
-                this.props.handleCheckpointEdit(newCheckpoint)
+                this.props.handleCheckpointEdit(newCheckpoint, this.state.editing)
             } else {
                 this.props.handleCheckpointSave(newCheckpoint)
             }
         }
         this.setState({
             showModal: false,
+            editing: false,
             checkpointName: '',
             checkpointDescription: '',
             coords: {

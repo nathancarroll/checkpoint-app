@@ -31,9 +31,9 @@ class CreateRaceContainer extends Component {
     }
 
     handleCheckpointEdit = (editedCheckpoint, indexToEdit) => {
-        console.log('we are editing', editedCheckpoint);
+        console.log('we are editing', editedCheckpoint, indexToEdit);
         this.setState({
-            checkpoints: [editedCheckpoint]
+            checkpoints: [...this.state.checkpoints.slice(0, indexToEdit), editedCheckpoint, ...this.state.checkpoints.slice(indexToEdit + 1)]
         })
     }
 
