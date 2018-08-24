@@ -79,7 +79,13 @@ class RaceCheckpoints extends Component{
         } else {
           status = 'REGISTERING';
         }
-        if ((this.props.race.raceDetails.creator !== this.props.user.id) && status === 'IN PROGRESS'){
+        let joined;
+        for (let racer in this.props.race.participants){
+            if (this.props.race.participants[racer].id === this.props.user.id ){
+                joined = true;
+            } 
+        }
+        if ((this.props.race.raceDetails.creator !== this.props.user.id) && status === 'IN PROGRESS' && joined){
             checkinButton = <Paper elevation={10}>
                                 <ListItem>
                                     <button onClick={this.validateCheckin}>CHECK IN</button>
