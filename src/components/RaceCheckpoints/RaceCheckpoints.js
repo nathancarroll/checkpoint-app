@@ -70,13 +70,25 @@ class RaceCheckpoints extends Component{
                 )
             })
         }
+        let checkinButton = null;
+        let status;
+        if (this.props.race.raceDetails.startTime && this.props.race.raceDetails.finishTime){
+          status = 'COMPLETED';
+        } else if (this.props.race.raceDetails.startTime){
+          status = 'IN PROGRESS';
+        } else {
+          status = 'REGISTERING';
+        }
+        if ((this.props.race.raceDetails.creator !== this.props.user.id) && status === 'IN PROGRESS'){
+            checkinButton = <Paper elevation={10}>
+                                <ListItem>
+                                    <button onClick={this.validateCheckin}>CHECK IN</button>
+                                </ListItem>
+                             </Paper>
+        }
         return(
             <div>
-                <Paper elevation={10}>
-                <ListItem>
-                    <button onClick={this.validateCheckin}>Check In</button>
-                </ListItem>
-                </Paper>
+                {checkinButton}
                 {allCheckpoints}
             </div>
         )
@@ -84,7 +96,8 @@ class RaceCheckpoints extends Component{
 };
 
 const mapStateToProps = (state) => ({
-    race: state.race
+    race: state.race,
+    user: state.user
 })
 
 export default connect(mapStateToProps)(RaceCheckpoints);

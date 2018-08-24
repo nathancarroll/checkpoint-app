@@ -59,6 +59,10 @@ class CreateRaceContainer extends Component {
         })
     }
 
+    cancel = () => {
+        window.location.href = '/#/user'
+    }
+
     render() {
         let content;
         if (this.state.showMap) {
@@ -77,19 +81,19 @@ class CreateRaceContainer extends Component {
                     {/* <button onClick={this.toggleView}>Add more checkpoints</button> */}
                     <Paper elevation={10}>
                     <ListItem>
-                    <input onChange={this.handleNameChange} placeholder="name your race" value={this.state.raceName} />
-                    <button onClick={this.submitRace}>Submit Race</button>
+                    <input onChange={this.handleNameChange} placeholder="NAME YOUR RACE" value={this.state.raceName} />
+                    <button onClick={this.submitRace}>SUBMIT RACE</button>
                     </ListItem>
                     </Paper>
                     <CreateRaceCheckpointList checkpoints={this.state.checkpoints} />
                     <Paper elevation={10}>
                         <ListItem onClick={this.toggleView}>
-                            <ListItemText primary="Add more checkpoints" />
+                            <ListItemText primary="ADD MORE CHECKPOINTS" />
                         </ListItem>
                     </Paper>
                     <Paper elevation={10}>
-                        <ListItem>
-                            <Link to="/#/user">Cancel</Link>
+                        <ListItem onClick={this.cancel} className="list-button">
+                            CANCEL
                         </ListItem>
                     </Paper>
                 </List>

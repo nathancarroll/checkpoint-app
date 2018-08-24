@@ -1,5 +1,11 @@
 # Nate Carroll Solo Project
 
+# Gif showing some racers pulling up to a checkpoint
+https://giphy.com/gifs/9JyLzY6cfDyq2BxNUg/fullscreen
+
+# Gif showing a very crowded checkpoint
+https://giphy.com/gifs/OqDww9maUbdxQdPd4l/fullscreen
+
 
 # Express/Passport with React
 This version uses React to control the login requests and redirection in coordination with client-side routing.
