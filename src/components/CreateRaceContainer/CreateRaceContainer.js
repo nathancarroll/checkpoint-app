@@ -37,6 +37,13 @@ class CreateRaceContainer extends Component {
         })
     }
 
+    handleCheckpointDelete = (indexToDelete) => {
+        console.log('we are deleting', indexToDelete);
+        this.setState({
+            checkpoints: [...this.state.checkpoints.slice(0, indexToDelete), ...this.state.checkpoints.slice(indexToDelete + 1)]
+        })
+    }
+
     toggleView = () => {
         this.setState({
             showMap: !this.state.showMap
@@ -73,6 +80,7 @@ class CreateRaceContainer extends Component {
                     handleMapClick={this.handleMapClick}
                     handleCheckpointSave={this.handleCheckpointSave}
                     handleCheckpointEdit={this.handleCheckpointEdit}
+                    handleCheckpointDelete={this.handleCheckpointDelete}
                 />
             )
         } else {

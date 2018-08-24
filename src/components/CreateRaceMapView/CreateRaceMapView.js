@@ -82,6 +82,9 @@ class CreateRaceMapView extends Component{
             } else {
                 this.props.handleCheckpointSave(newCheckpoint)
             }
+        } else if (e.target.textContent === 'Delete'){
+            console.log('delete');
+            this.props.handleCheckpointDelete(this.state.editing);
         }
         this.setState({
             showModal: false,

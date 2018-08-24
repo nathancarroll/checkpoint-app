@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import MaterialIcon from 'material-icons-react';
 
-const checkpointMargin = 50000 // Currently 50 km, dont forget to change this back for production!!
+const checkpointMargin = 1000 // This margin for error can be changed as needed.
 
 class RaceCheckpoints extends Component{
     validateCheckin = () => {
@@ -19,10 +19,10 @@ class RaceCheckpoints extends Component{
             console.log(position.coords)
             const d = this.latLngDiffs(targetCheckpoint.latitude, targetCheckpoint.longitude, position.coords.latitude, position.coords.longitude);
             if (d < checkpointMargin){
-                alert('you got it dude');
+                alert('You got it!');
                 this.revealNext(targetCheckpoint.id);
             } else {
-                alert('come a little closer then you\'ll see')
+                alert('Come a little closer.')
             }
         });
     }

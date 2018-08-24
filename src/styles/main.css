@@ -30,7 +30,7 @@ body {
 
 form {
     background-color: white;
-    width: 50%;
+    width: 60%;
     height: auto;
 }
 
@@ -103,5 +103,11 @@ TextField {
 .list-button {
     /* border: solid red 2px; */
     border-radius: 4px;
+}
+
+#login-page {
+    display: grid;
+    align-items: 'center';
+    justify-content: 'center';
 }
 

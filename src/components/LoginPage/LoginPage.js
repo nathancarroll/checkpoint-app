@@ -64,11 +64,18 @@ class LoginPage extends Component {
     return (<span />);
   }
 
+  moveToRegister = () => {
+    window.location.href = '/#/register';
+  }
+
   render() {
     return (
-      <div>
+      <div id="login-page">
         { this.renderAlert() }
-        <h1 style={{color: 'white'}}>CHECKPOINT</h1>
+        <div>
+        <h1 style={{color: '#121416'}}>CHECKPOINT</h1>
+        </div>
+        <div>
         <form onSubmit={this.login}>
           <div>
               <TextField
@@ -104,11 +111,12 @@ class LoginPage extends Component {
             <input
               type="submit"
               name="submit"
-              value="Log In"
+              value="LOG IN"
             />
-            <Button variant="contained" color="white"><Link to="/register">Register</Link></Button>
+            <Button><Link to="/register">Register</Link></Button>
           </div>
         </form>
+        </div>
       </div>
     );
   }
