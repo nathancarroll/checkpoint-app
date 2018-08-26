@@ -104,17 +104,17 @@ TextField {
     border-radius: 4px;
 }
 
-#login-page {
-    display: flex;
-    justify-content: 'center';
-}
-
 #only-header {
     color: '#121416';
-    width: 100%;
+    width: 60%;
+    margin: auto;
+    padding: 40px 0px 20px 0px;
 }
 
 #login-form {
-    width: 100%;
+    display: block;
+    width: 60%;
+    margin: auto;
+    padding: 10px 0px 40px 0px;
 }
 

@@ -78,6 +78,7 @@ class LoginPage extends Component {
               <TextField
                 type="text"
                 name="username"
+                placeholder="username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
                 InputProps={{
@@ -93,6 +94,7 @@ class LoginPage extends Component {
               <TextField
                 type="password"
                 name="password"
+                placeholder="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
                 InputProps={{
@@ -105,11 +107,6 @@ class LoginPage extends Component {
               />
           </div>
           <div>
-            {/* <input
-              type="submit"
-              name="submit"
-              value="LOG IN"
-            /> */}
             <Button
               type="submit"
             >SUBMIT</Button>
