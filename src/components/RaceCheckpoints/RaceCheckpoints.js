@@ -2,28 +2,47 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';
+import CheckinDialog from '../CheckinDialog/CheckinDialog';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import MaterialIcon from 'material-icons-react';
+import Spinner from 'react-spinkit';
 
-const checkpointMargin = 1000 // This margin for error can be changed as needed.
+import '../NewRaceMap/NewRaceMap.css';
+
+const checkpointMargin = 10000 // This margin for error can be changed as needed.
 
 class RaceCheckpoints extends Component{
+    state = {
+        showDialog: false,
+        showSpinner: false,
+        feedback: ''
+    }
+
     validateCheckin = () => {
         const targetCheckpoint = this.props.race.checkpoints[this.props.race.checkpoints.length-1];
         console.log('targetCheckpoint: ', targetCheckpoint);
+        this.setState({
+            showSpinner: true
+        })
         navigator.geolocation.getCurrentPosition((position) => {
             console.log(position.coords)
             const d = this.latLngDiffs(targetCheckpoint.latitude, targetCheckpoint.longitude, position.coords.latitude, position.coords.longitude);
+            let message;
             if (d < checkpointMargin){
-                alert('You got it!');
+                message = 'You got it!';
                 this.revealNext(targetCheckpoint.id);
             } else {
-                alert('Come a little closer.')
+                message = 'Not quite...'
             }
+            this.setState({
+                showSpinner: false,
+                showDialog: true,
+                feedback: message
+            })
         });
     }
 
@@ -54,7 +73,20 @@ class RaceCheckpoints extends Component{
         return d * 1000; // Return the distance between the checkpoints in meters
     }
 
+    handleDialogOpen = () => {
+        this.setState({
+            showDialog: true
+        })
+    }
+
+    handleDialogClose = () => {
+        this.setState({
+            showDialog: false
+        })
+    }
+
     render(){
+        const showHideClassName = this.state.showSpinner ? "spinner display-block" : "spinner display-none";
         let allCheckpoints = [];
         if (this.props.race.checkpoints){
             allCheckpoints = this.props.race.checkpoints.map(checkpoint => {
@@ -89,6 +121,7 @@ class RaceCheckpoints extends Component{
             checkinButton = <Paper elevation={10}>
                                 <ListItem>
                                     <button onClick={this.validateCheckin}>CHECK IN</button>
+                                    <Spinner className={showHideClassName} name="circle" fadeIn='quarter'/>
                                 </ListItem>
                              </Paper>
         }
@@ -96,6 +129,11 @@ class RaceCheckpoints extends Component{
             <div>
                 {checkinButton}
                 {allCheckpoints}
+                <CheckinDialog
+                    open={this.state.showDialog}
+                    handleClose={this.handleDialogClose}
+                    feedback={this.state.feedback}
+                />
             </div>
         )
     }
