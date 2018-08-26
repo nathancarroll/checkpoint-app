@@ -72,11 +72,8 @@ class LoginPage extends Component {
     return (
       <div id="login-page">
         { this.renderAlert() }
-        <div>
-        <h1 style={{color: '#121416'}}>CHECKPOINT</h1>
-        </div>
-        <div>
-        <form onSubmit={this.login}>
+        <h1 id="only-header">CHECKPOINT</h1>
+        <form id="login-form" onSubmit={this.login}>
           <div>
               <TextField
                 type="text"
@@ -108,16 +105,23 @@ class LoginPage extends Component {
               />
           </div>
           <div>
-            <input
+            {/* <input
               type="submit"
               name="submit"
               value="LOG IN"
-            />
-            <Button><Link to="/register">Register</Link></Button>
+            /> */}
+            <Button
+              type="submit"
+            >SUBMIT</Button>
+            <Button>
+              <Link 
+                to="/register" 
+                style={{textDecoration: 'none', color: 'black'}}>Register
+              </Link>
+            </Button>
           </div>
         </form>
         </div>
-      </div>
     );
   }
 }

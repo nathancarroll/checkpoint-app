@@ -29,7 +29,6 @@ body {
 } */
 
 form {
-    background-color: white;
     width: 60%;
     height: auto;
 }
@@ -106,8 +105,16 @@ TextField {
 }
 
 #login-page {
-    display: grid;
-    align-items: 'center';
+    display: flex;
     justify-content: 'center';
+}
+
+#only-header {
+    color: '#121416';
+    width: 100%;
+}
+
+#login-form {
+    width: 100%;
 }
 
