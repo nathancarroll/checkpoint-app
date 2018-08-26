@@ -29,8 +29,7 @@ body {
 } */
 
 form {
-    background-color: white;
-    width: 50%;
+    width: 60%;
     height: auto;
 }
 
@@ -103,5 +102,19 @@ TextField {
 .list-button {
     /* border: solid red 2px; */
     border-radius: 4px;
+}
+
+.header {
+    color: '#121416';
+    width: 60%;
+    margin: auto;
+    padding: 40px 0px 20px 0px;
+}
+
+form {
+    display: block;
+    width: 60%;
+    margin: auto;
+    padding: 10px 0px 40px 0px;
 }
 

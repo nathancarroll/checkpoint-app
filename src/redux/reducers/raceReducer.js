@@ -38,6 +38,7 @@ const raceDetails = (state=emptyRace, action) => {
                 ...state,
                 raceID: action.payload
             }
+            break;
         case RACE_ACTIONS.SET_START:
             state = {
                 ...state,

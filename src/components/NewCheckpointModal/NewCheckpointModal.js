@@ -27,7 +27,7 @@ class NewCheckpointModal extends Component{
                             name="checkpointDescription" 
                             onChange={this.props.handleModalChange}
                         />
-                    <Button name="cancel" onClick={this.props.handleModalClick}>Cancel</Button>
+                    <Button name="cancel" onClick={this.props.handleModalClick}>{this.props.editing ? 'Delete' : 'Cancel'}</Button>
                     <Button name="save" onClick={this.props.handleModalClick}>Save</Button>
                 </div>
                 </div>

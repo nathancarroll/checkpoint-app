@@ -11,7 +11,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import MaterialIcon from 'material-icons-react';
-import Button from '@material-ui/core/Button';
 
 import Header from '../Header/Header';
 

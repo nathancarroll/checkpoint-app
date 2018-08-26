@@ -6,8 +6,6 @@ import MaterialIcon from 'material-icons-react';
 import MapCheckpoint from '../MapCheckpoint/MapCheckpoint';
 import NewCheckpointModal from '../NewCheckpointModal/NewCheckpointModal';
 
-import {ListItem} from '@material-ui/core';
-
 import '../NewRaceMap/NewRaceMap.css';
 
 class CreateRaceMapView extends Component{
@@ -15,6 +13,7 @@ class CreateRaceMapView extends Component{
         super(props)
         this.state = {
             showModal: false,
+            editing: false,
             checkpointName: '',
             checkpointDescription: '',
             coords: {
@@ -26,19 +25,45 @@ class CreateRaceMapView extends Component{
     }
 
     handleModalChange = (e) => {
+        console.log('changin');
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
     handleMapClick = (e) => {
+        // Dont do anything with extra map clicks while the new checkpoint modal is open
         if (this.state.showModal) return;
-        console.log('handleMapClick:', e);
+        // Also don't do anything if the target of the click is a checkpoint
+        if (e.event.target.tagName === 'I'){
+            console.log('handling checkpoint click');
+            console.log(e.event);
+            return;
+        };
+
         this.setState({
             showModal: true,
             coords: {
                 lat: e.lat,
                 lng: e.lng,
+            }
+        })
+    }
+
+    handleCheckpointClick = (e) => {
+        if (this.state.showModal) return;
+        // The event here is the index of the array of the map's children
+        console.log('handleCheckpointClick');
+        console.log(e);
+        let checkpointToEdit = this.props.checkpoints[e];
+        this.setState({
+            showModal: true,
+            editing: e,
+            checkpointName: checkpointToEdit.name,
+            checkpointDescription: checkpointToEdit.description,
+            coords: {
+                lat: checkpointToEdit.lat,
+                lng: checkpointToEdit.lng
             }
         })
     }
@@ -51,10 +76,19 @@ class CreateRaceMapView extends Component{
                 name: this.state.checkpointName,
                 description: this.state.checkpointDescription
             }
-            this.props.handleCheckpointSave(newCheckpoint)
+            if (this.state.editing){
+                console.log('were editing now');
+                this.props.handleCheckpointEdit(newCheckpoint, this.state.editing)
+            } else {
+                this.props.handleCheckpointSave(newCheckpoint)
+            }
+        } else if (e.target.textContent === 'Delete'){
+            console.log('delete');
+            this.props.handleCheckpointDelete(this.state.editing);
         }
         this.setState({
             showModal: false,
+            editing: false,
             checkpointName: '',
             checkpointDescription: '',
             coords: {
@@ -65,14 +99,17 @@ class CreateRaceMapView extends Component{
     }
 
     render(){
-        const allCheckpoints = this.props.checkpoints.map((checkpoint, index) => {
-            return(
-                <MapCheckpoint
-                    key={index}
-                    {...checkpoint}
-                />
-            )
-        })
+        let allCheckpoints = []
+        if (this.props.checkpoints){
+            allCheckpoints = this.props.checkpoints.map((checkpoint, index) => {
+                return(
+                    <MapCheckpoint
+                        key={index}
+                        {...checkpoint}
+                    />
+                )
+            })
+        }
         return(
             <div style={{ height: '100vh', width: '100%' }}> 
                 <Button 
@@ -84,9 +121,9 @@ class CreateRaceMapView extends Component{
                 </Button>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
-                    defaultCenter={{lat: 44.977769, lng: -93.154999}}
+                    defaultCenter={{lat: 44.977055, lng: -93.265884}}
                     defaultZoom={13}
-                    onChildClick={this.props.handleCheckpointClick}
+                    onChildClick={this.handleCheckpointClick}
                     onClick={this.handleMapClick}
                     options={{gestureHandling: 'greedy'}}
                 >
@@ -98,6 +135,7 @@ class CreateRaceMapView extends Component{
                         handleModalClick={this.handleModalClick}
                         checkpointName={this.state.checkpointName}
                         checkpointDescription={this.state.checkpointDescription}
+                        editing={this.state.editing}
                         {...this.state.coords}
                     />
                 </GoogleMapReact>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Route, Link, Redirect, Switch} from 'react-router-dom';
+import {Route, Redirect, Switch} from 'react-router-dom';
 import {List, ListItem, Paper} from '@material-ui/core';
 
 import {RACE_ACTIONS} from '../../redux/actions/raceActions';

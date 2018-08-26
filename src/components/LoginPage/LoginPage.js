@@ -64,16 +64,21 @@ class LoginPage extends Component {
     return (<span />);
   }
 
+  moveToRegister = () => {
+    window.location.href = '/#/register';
+  }
+
   render() {
     return (
-      <div>
+      <div id="login-page">
         { this.renderAlert() }
-        <h1 style={{color: 'white'}}>CHECKPOINT</h1>
-        <form onSubmit={this.login}>
+        <h1 className="header">CHECKPOINT</h1>
+        <form id="login-form" onSubmit={this.login}>
           <div>
               <TextField
                 type="text"
                 name="username"
+                placeholder="username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
                 InputProps={{
@@ -89,6 +94,7 @@ class LoginPage extends Component {
               <TextField
                 type="password"
                 name="password"
+                placeholder="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
                 InputProps={{
@@ -101,15 +107,18 @@ class LoginPage extends Component {
               />
           </div>
           <div>
-            <input
+            <Button
               type="submit"
-              name="submit"
-              value="Log In"
-            />
-            <Button variant="contained" color="white"><Link to="/register">Register</Link></Button>
+            >SUBMIT</Button>
+            <Button>
+              <Link 
+                to="/register" 
+                style={{textDecoration: 'none', color: 'black'}}>Register
+              </Link>
+            </Button>
           </div>
         </form>
-      </div>
+        </div>
     );
   }
 }

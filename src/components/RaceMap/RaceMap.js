@@ -4,9 +4,8 @@ import {connect} from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import MapCheckpoint from '../MapCheckpoint/MapCheckpoint';
 
-let allCheckpoints;
-
 class RaceMap extends Component{
+
     render(){
         let allCheckpoints = [];
         if (this.props.checkpoints){
@@ -21,8 +20,8 @@ class RaceMap extends Component{
             <div className="map-container" style={{ height: '70vh', width: '95vw'}}> 
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
-                defaultCenter={{lat: 44.978185, lng: -93.081808}}
-                defaultZoom={14}
+                defaultCenter={{lat: 44.977055, lng: -93.265884}}
+                defaultZoom={13}
                 options={{gestureHandling: 'greedy'}}
             >
                 {allCheckpoints}
