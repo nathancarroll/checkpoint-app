@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import {TextField, Button, InputAdornment} from '@material-ui/core';
+import MaterialIcon from 'material-icons-react';
+
 class RegisterPage extends Component {
   constructor(props) {
     super(props);
@@ -69,37 +72,50 @@ class RegisterPage extends Component {
     return (
       <div>
         {this.renderAlert()}
-        <form onSubmit={this.registerUser}>
-          <h1>Register User</h1>
+        <h1 className="header">REGISTER</h1>
+        <form id="register-form" onSubmit={this.registerUser}>
           <div>
-            <label htmlFor="username">
-              Username:
-              <input
+              <TextField
                 type="text"
                 name="username"
+                placeholder="username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MaterialIcon icon="account_box" />
+                    </InputAdornment>
+                  ),
+                }}
               />
-            </label>
           </div>
           <div>
-            <label htmlFor="password">
-              Password:
-              <input
+              <TextField
                 type="password"
                 name="password"
+                placeholder="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MaterialIcon icon="vpn_key" />
+                    </InputAdornment>
+                  ),
+                }}
               />
-            </label>
           </div>
           <div>
-            <input
+            <Button>
+              <Link 
+                to="/" 
+                style={{textDecoration: 'none', color: 'black'}}>CANCEL
+              </Link>
+            </Button>
+            <Button
               type="submit"
-              name="submit"
-              value="Register"
-            />
-            <Link to="/home">Cancel</Link>
+            >REGISTER</Button>
           </div>
         </form>
       </div>

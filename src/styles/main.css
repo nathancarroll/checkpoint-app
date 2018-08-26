@@ -104,14 +104,14 @@ TextField {
     border-radius: 4px;
 }
 
-#only-header {
+.header {
     color: '#121416';
     width: 60%;
     margin: auto;
     padding: 40px 0px 20px 0px;
 }
 
-#login-form {
+form {
     display: block;
     width: 60%;
     margin: auto;

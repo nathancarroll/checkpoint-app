@@ -72,7 +72,7 @@ class LoginPage extends Component {
     return (
       <div id="login-page">
         { this.renderAlert() }
-        <h1 id="only-header">CHECKPOINT</h1>
+        <h1 className="header">CHECKPOINT</h1>
         <form id="login-form" onSubmit={this.login}>
           <div>
               <TextField
