@@ -120,7 +120,7 @@ class CreateRaceMapView extends Component{
                     <MaterialIcon icon="arrow_back" />
                 </Button>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: 'AIzaSyBfp9E-IfhLx-7zsoW5i79uFXAl63KMJbw'}}
+                    bootstrapURLKeys={{ key: 'HIDDEN'}}
                     defaultCenter={{lat: 44.977055, lng: -93.265884}}
                     defaultZoom={13}
                     onChildClick={this.handleCheckpointClick}
